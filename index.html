@@ -1,0 +1,2781 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probability & Statistics — Panduan Belajar Lengkap</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --coral: #E8735A;
+    --coral-light: #F5A48B;
+    --coral-pale: #FDF0EC;
+    --slate: #2D3748;
+    --slate-light: #4A5568;
+    --slate-pale: #EDF2F7;
+    --gold: #D4A853;
+    --gold-light: #F6E8C3;
+    --white: #FEFEFE;
+    --ink: #1A202C;
+    --rule: #E2E8F0;
+    --green-soft: #68D391;
+    --blue-soft: #63B3ED;
+    --purple-soft: #B794F4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* SIDEBAR NAV */
+  #sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 260px;
+    height: 100vh;
+    background: var(--slate);
+    overflow-y: auto;
+    z-index: 100;
+    padding-bottom: 2rem;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-header {
+    background: var(--coral);
+    padding: 1.5rem 1.2rem 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .sidebar-header h2 {
+    font-family: 'Playfair Display', serif;
+    color: white;
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+
+  .sidebar-header p {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.72rem;
+    margin-top: 0.2rem;
+    font-weight: 300;
+  }
+
+  .nav-section {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .nav-section-title {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--coral-light);
+    padding: 0.8rem 1.2rem 0.4rem;
+  }
+
+  .nav-section a {
+    display: block;
+    padding: 0.45rem 1.2rem;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+
+  .nav-section a:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+    border-left-color: var(--coral-light);
+  }
+
+  /* MAIN CONTENT */
+  #main {
+    margin-left: 260px;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--coral) 0%, #C0523A 100%);
+    padding: 5rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%; left: 20%;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.05rem;
+    max-width: 560px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-stat {
+    text-align: center;
+  }
+
+  .hero-stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: white;
+    line-height: 1;
+  }
+
+  .hero-stat .label {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  /* CONTENT SECTIONS */
+  .content-area {
+    padding: 0 4rem;
+  }
+
+  .chapter {
+    padding: 4rem 0 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .chapter:last-child { border-bottom: none; }
+
+  .chapter-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 0.6rem;
+  }
+
+  .chapter h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--slate);
+    margin-bottom: 1.5rem;
+    line-height: 1.25;
+  }
+
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--slate);
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--coral-pale);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .section h3 .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--coral);
+    flex-shrink: 0;
+  }
+
+  .section h4 {
+    font-weight: 600;
+    color: var(--slate);
+    font-size: 1rem;
+    margin: 1.2rem 0 0.5rem;
+  }
+
+  p { margin-bottom: 0.8rem; color: var(--slate-light); }
+
+  /* DEFINITION CARDS */
+  .def-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .def-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .def-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    border-color: var(--coral-light);
+  }
+
+  .def-card .term {
+    font-weight: 600;
+    color: var(--coral);
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .def-card .definition {
+    font-size: 0.88rem;
+    color: var(--slate-light);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* FORMULA BOXES */
+  .formula-box {
+    background: var(--slate);
+    border-radius: 10px;
+    padding: 1.5rem 2rem;
+    margin: 1rem 0 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .formula-box::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--coral);
+  }
+
+  .formula-box .formula-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--coral-light);
+    margin-bottom: 0.8rem;
+  }
+
+  .formula-box .mjx-chtml {
+    color: white !important;
+  }
+
+  .formula-box p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.85rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0;
+  }
+
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .formula-card {
+    background: var(--coral-pale);
+    border-radius: 8px;
+    padding: 1.2rem;
+    border: 1px solid rgba(232,115,90,0.2);
+  }
+
+  .formula-card .fc-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--coral);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  /* INLINE FORMULA */
+  .inline-formula {
+    display: inline-block;
+    background: var(--slate-pale);
+    border-radius: 4px;
+    padding: 0.1rem 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.92em;
+    color: var(--slate);
+  }
+
+  /* STEPS */
+  .steps {
+    counter-reset: step;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .step {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    counter-increment: step;
+    min-width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--coral);
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .step-body {
+    flex: 1;
+    font-size: 0.92rem;
+    color: var(--slate-light);
+    padding-top: 0.15rem;
+  }
+
+  /* BULLET LISTS */
+  .bullet-list {
+    list-style: none;
+    margin: 0.5rem 0 1rem;
+    padding: 0;
+  }
+
+  .bullet-list li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    margin-bottom: 0.6rem;
+    font-size: 0.92rem;
+    color: var(--slate-light);
+  }
+
+  .bullet-list li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--coral-light);
+    flex-shrink: 0;
+    margin-top: 0.55rem;
+  }
+
+  /* CALLOUT */
+  .callout {
+    border-left: 4px solid var(--gold);
+    background: var(--gold-light);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .callout .callout-title {
+    font-weight: 600;
+    color: #92650A;
+    font-size: 0.88rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .callout p {
+    color: #6B4B0A;
+    font-size: 0.88rem;
+    margin: 0;
+  }
+
+  /* COMPARISON TABLE */
+  .table-wrapper {
+    overflow-x: auto;
+    margin: 1rem 0 1.5rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  thead tr {
+    background: var(--slate);
+    color: white;
+  }
+
+  thead th {
+    padding: 0.8rem 1rem;
+    text-align: left;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    font-size: 0.82rem;
+  }
+
+  tbody tr:nth-child(even) { background: var(--coral-pale); }
+  tbody tr:nth-child(odd) { background: white; }
+
+  tbody tr:hover { background: rgba(232,115,90,0.08); }
+
+  tbody td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--slate-light);
+    vertical-align: top;
+  }
+
+  tbody td:first-child { font-weight: 600; color: var(--slate); }
+
+  /* CHART DIAGRAMS */
+  .diagram-area {
+    background: var(--slate-pale);
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 1rem 0 1.5rem;
+    text-align: center;
+  }
+
+  svg text { font-family: 'Inter', sans-serif; }
+
+  /* HIGHLIGHT RULE */
+  .highlight-rule {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .rule-card {
+    border-radius: 8px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+
+  .rule-card .pct {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .rule-card .desc {
+    font-size: 0.8rem;
+    color: var(--slate-light);
+    margin-top: 0.4rem;
+  }
+
+  .rule-68 { background: #EBF8FF; }
+  .rule-68 .pct { color: #2B6CB0; }
+  .rule-95 { background: #F0FFF4; }
+  .rule-95 .pct { color: #276749; }
+  .rule-997 { background: #FAF5FF; }
+  .rule-997 .pct { color: #553C9A; }
+
+  /* Z TABLE */
+  .z-table-note {
+    background: var(--coral-pale);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+    font-size: 0.88rem;
+    color: var(--slate);
+  }
+
+  .z-table-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+    border: 1px solid var(--rule);
+  }
+
+  .z-table-scroll table thead {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+
+  /* VENN DIAGRAM */
+  .venn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  /* MOBILE TOGGLE */
+  #menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem; left: 1rem;
+    z-index: 200;
+    background: var(--coral);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 0.8rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  /* BACK TO TOP */
+  #back-top {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    background: var(--coral);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 44px; height: 44px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(232,115,90,0.4);
+    transition: transform 0.2s, opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #back-top.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  #back-top:hover { transform: translateY(-3px); }
+
+  @media (max-width: 900px) {
+    #sidebar {
+      transform: translateX(-100%);
+    }
+    #sidebar.open {
+      transform: translateX(0);
+    }
+    #main { margin-left: 0; }
+    #menu-toggle { display: flex; align-items: center; justify-content: center; }
+    .hero { padding: 4rem 1.5rem 3rem; }
+    .hero h1 { font-size: 2.2rem; }
+    .content-area { padding: 0 1.5rem; }
+    .def-grid { grid-template-columns: 1fr; }
+    .formula-grid { grid-template-columns: 1fr; }
+    .highlight-rule { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h2>Probability &amp; Statistics</h2>
+    <p>Panduan Belajar Lengkap</p>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Visualisasi Data</div>
+    <a href="#one-way">One-Way Tables</a>
+    <a href="#bar-pie">Bar &amp; Pie Charts</a>
+    <a href="#line-ogive">Line Graphs &amp; Ogive</a>
+    <a href="#two-way">Two-Way Tables</a>
+    <a href="#venn">Venn Diagrams</a>
+    <a href="#freq-dot">Frequency &amp; Dot Plots</a>
+    <a href="#rel-freq">Relative Frequency Tables</a>
+    <a href="#joint">Joint Distributions</a>
+    <a href="#histogram">Histograms &amp; Stem-Leaf</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Analisis Data</div>
+    <a href="#central">Ukuran Pemusatan</a>
+    <a href="#spread">Ukuran Penyebaran</a>
+    <a href="#outliers">Outliers &amp; Shifting/Scaling</a>
+    <a href="#boxplot">Box-and-Whisker Plot</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Distribusi Data</div>
+    <a href="#mean-var-std">Mean, Varians &amp; Std Dev</a>
+    <a href="#freq-poly">Histogram &amp; Polygon</a>
+    <a href="#skew">Distribusi Simetris &amp; Miring</a>
+    <a href="#normal-z">Distribusi Normal &amp; Z-Score</a>
+    <a href="#chebyshev">Teorema Chebyshev</a>
+    <a href="#covariance">Kovarians</a>
+    <a href="#correlation">Koefisien Korelasi</a>
+    <a href="#weighted">Rata-rata Berbobot</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Probabilitas</div>
+    <a href="#simple-prob">Probabilitas Sederhana</a>
+    <a href="#addition">Aturan Penjumlahan</a>
+    <a href="#independent">Kejadian Independen &amp; Dependen</a>
+    <a href="#bayes">Teorema Bayes</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Variabel Acak Diskrit</div>
+    <a href="#discrete">Probabilitas Diskrit</a>
+    <a href="#transform">Transformasi Variabel</a>
+    <a href="#perm-comb">Permutasi &amp; Kombinasi</a>
+    <a href="#binomial">Binomial</a>
+    <a href="#poisson">Poisson</a>
+    <a href="#bernoulli">Bernoulli</a>
+    <a href="#geometric">Geometrik</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Sampling</div>
+    <a href="#study-types">Jenis Studi</a>
+    <a href="#bias">Sampling &amp; Bias</a>
+    <a href="#sdsm">Distribusi Sampel Mean</a>
+    <a href="#sdsp">Distribusi Sampel Proporsi</a>
+    <a href="#t-dist">Distribusi t</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Interval Kepercayaan</div>
+    <a href="#ci-mean">CI untuk Mean</a>
+    <a href="#ci-prop">CI untuk Proporsi</a>
+    <a href="#ci-diff-mean">CI Perbedaan Mean</a>
+    <a href="#ci-matched">CI Matched-Pair</a>
+    <a href="#ci-diff-prop">CI Perbedaan Proporsi</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Uji Hipotesis</div>
+    <a href="#hypothesis">Proses Uji Hipotesis</a>
+    <a href="#errors">Error Tipe I &amp; II</a>
+    <a href="#test-stat">Test Statistics</a>
+    <a href="#p-value">P-Value</a>
+    <a href="#diff-means">Uji Perbedaan Mean</a>
+    <a href="#matched-test">Matched-Pair Test</a>
+    <a href="#diff-prop">Uji Perbedaan Proporsi</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Regresi</div>
+    <a href="#scatter">Scatterplot</a>
+    <a href="#regression">Garis Regresi</a>
+    <a href="#corr-resid">Korelasi &amp; Residual</a>
+    <a href="#r-squared">R² &amp; RMSE</a>
+    <a href="#chi-square">Chi-Square Tests</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Tabel Statistik</div>
+    <a href="#z-table-pos">Tabel Z (Positif)</a>
+    <a href="#z-table-neg">Tabel Z (Negatif)</a>
+    <a href="#t-table">Tabel t</a>
+    <a href="#chi-table">Tabel Chi-Square</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Panduan Belajar Lengkap</div>
+    <h1>Probability &amp;<br>Statistics</h1>
+    <p>Semua rumus, konsep, definisi, dan tabel statistik dari materi kuliah — tersusun rapi untuk belajar dengan nyaman.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">9</div>
+        <div class="label">Bab Utama</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">80+</div>
+        <div class="label">Definisi</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">50+</div>
+        <div class="label">Rumus</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">3</div>
+        <div class="label">Tabel Statistik</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <!-- ======================================= -->
+    <!-- BAB 1: VISUALIZING DATA -->
+    <!-- ======================================= -->
+    <div class="chapter" id="visualizing-data">
+      <div class="chapter-eyebrow">Bab 1</div>
+      <h2>Visualisasi Data</h2>
+
+      <!-- ONE-WAY TABLES -->
+      <div class="section" id="one-way">
+        <h3><span class="dot"></span> One-Way Tables</h3>
+        <p>One-way tables adalah cara paling dasar untuk mengorganisir data. Sebelum membuat tabel, kita perlu memahami komponen-komponen data terlebih dahulu.</p>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Individuals (Individu)</div>
+            <div class="definition">Kumpulan elemen (bisa orang atau objek lain) yang disurvei untuk membentuk dataset tentang mereka.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Variables (Variabel)</div>
+            <div class="definition">Setiap properti yang kita kumpulkan dalam data tentang individu tersebut.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Data</div>
+            <div class="definition">Kumpulan individu beserta variabel-variabelnya.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Data Table (Tabel Data)</div>
+            <div class="definition">Tabel yang mengorganisir data, termasuk individu dan variabel-variabelnya.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Categorical Variables</div>
+            <div class="definition">Variabel non-numerik, disebut juga variabel "kualitatif". Nilainya tidak direpresentasikan dengan angka.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Quantitative Variables</div>
+            <div class="definition">Variabel numerik. Nilainya berupa angka.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Discrete Variables</div>
+            <div class="definition">Variabel yang diperoleh dengan cara menghitung. Hanya dapat mengambil nilai numerik tertentu.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Continuous Variables</div>
+            <div class="definition">Variabel yang dapat mencakup data berupa desimal, pecahan, atau bilangan irasional.</div>
+          </div>
+        </div>
+
+        <h4>Skala Pengukuran</h4>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Skala</th><th>Jenis Data</th><th>Karakteristik</th><th>Contoh</th></tr></thead>
+            <tbody>
+              <tr><td>Nominal</td><td>Kategorik</td><td>Hanya bisa diberi label/nama</td><td>Makanan favorit, warna, jawaban ya/tidak</td></tr>
+              <tr><td>Ordinal</td><td>Kategorik</td><td>Dapat diurutkan</td><td>Peringkat kepuasan (rendah/sedang/tinggi)</td></tr>
+              <tr><td>Interval</td><td>Kuantitatif</td><td>Dapat diurutkan + interval diketahui</td><td>Suhu °C, skor IQ</td></tr>
+              <tr><td>Ratio</td><td>Kuantitatif</td><td>Seperti interval + ada nol mutlak</td><td>Tinggi badan, berat badan, usia</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BAR AND PIE CHARTS -->
+      <div class="section" id="bar-pie">
+        <h3><span class="dot"></span> Bar Graphs &amp; Pie Charts</h3>
+        <p>Grafik batang dan diagram lingkaran digunakan untuk memvisualisasikan data kategorik.</p>
+
+        <div class="diagram-area">
+          <svg width="100%" viewBox="0 0 600 280" style="max-width:600px;">
+            <!-- Bar chart -->
+            <text x="10" y="20" font-size="13" font-weight="600" fill="#2D3748">Bar Chart — Pengunjung per Benua</text>
+            <line x1="50" y1="240" x2="550" y2="240" stroke="#CBD5E0" stroke-width="1"/>
+            <line x1="50" y1="30" x2="50" y2="240" stroke="#CBD5E0" stroke-width="1"/>
+            <!-- bars -->
+            <rect x="70" y="80" width="60" height="160" fill="#E8735A" rx="3"/>
+            <rect x="160" y="160" width="60" height="80" fill="#E8735A" rx="3"/>
+            <rect x="250" y="190" width="60" height="50" fill="#E8735A" rx="3"/>
+            <rect x="340" y="210" width="60" height="30" fill="#E8735A" rx="3"/>
+            <rect x="430" y="225" width="60" height="15" fill="#E8735A" rx="3"/>
+            <!-- labels -->
+            <text x="100" y="257" text-anchor="middle" font-size="10" fill="#718096">Europe</text>
+            <text x="190" y="257" text-anchor="middle" font-size="10" fill="#718096">N.America</text>
+            <text x="280" y="257" text-anchor="middle" font-size="10" fill="#718096">Asia</text>
+            <text x="370" y="257" text-anchor="middle" font-size="10" fill="#718096">Australia</text>
+            <text x="460" y="257" text-anchor="middle" font-size="10" fill="#718096">S.America</text>
+            <!-- y axis labels -->
+            <text x="42" y="244" text-anchor="end" font-size="10" fill="#718096">0</text>
+            <text x="42" y="190" text-anchor="end" font-size="10" fill="#718096">5</text>
+            <text x="42" y="135" text-anchor="end" font-size="10" fill="#718096">10</text>
+            <text x="42" y="80" text-anchor="end" font-size="10" fill="#718096">15</text>
+            <line x1="48" y1="190" x2="52" y2="190" stroke="#CBD5E0"/>
+            <line x1="48" y1="135" x2="52" y2="135" stroke="#CBD5E0"/>
+            <line x1="48" y1="80" x2="52" y2="80" stroke="#CBD5E0"/>
+          </svg>
+        </div>
+
+        <div class="diagram-area">
+          <svg width="100%" viewBox="0 0 500 260" style="max-width:500px;">
+            <text x="250" y="20" text-anchor="middle" font-size="13" font-weight="600" fill="#2D3748">Pie Chart — Distribusi Benua</text>
+            <!-- Pie slices (approximate) -->
+            <path d="M200,140 L200,60 A80,80 0 1,1 130,195 Z" fill="#E8735A"/>
+            <path d="M200,140 L130,195 A80,80 0 0,1 148,80 Z" fill="#63B3ED"/>
+            <path d="M200,140 L148,80 A80,80 0 0,1 200,60 Z" fill="#68D391"/>
+            <path d="M200,140 L254,79 A80,80 0 0,1 270,180 Z" fill="#D4A853" opacity="0.9"/>
+            <!-- center label values -->
+            <text x="195" y="148" text-anchor="middle" font-size="18" font-weight="700" fill="white">16</text>
+            <!-- Legend -->
+            <rect x="310" y="80" width="12" height="12" fill="#E8735A" rx="2"/>
+            <text x="327" y="91" font-size="11" fill="#4A5568">Europe (16)</text>
+            <rect x="310" y="100" width="12" height="12" fill="#63B3ED" rx="2"/>
+            <text x="327" y="111" font-size="11" fill="#4A5568">N. America (6)</text>
+            <rect x="310" y="120" width="12" height="12" fill="#68D391" rx="2"/>
+            <text x="327" y="131" font-size="11" fill="#4A5568">Asia (3)</text>
+            <rect x="310" y="140" width="12" height="12" fill="#D4A853" rx="2"/>
+            <text x="327" y="151" font-size="11" fill="#4A5568">Australia (2)</text>
+            <rect x="310" y="160" width="12" height="12" fill="#B794F4" rx="2"/>
+            <text x="327" y="171" font-size="11" fill="#4A5568">S. America (1)</text>
+          </svg>
+        </div>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Frequency Table</div>
+            <div class="definition">Tabel ringkasan yang menunjukkan frekuensi atau jumlah dari setiap variabel kategorik.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LINE GRAPHS & OGIVES -->
+      <div class="section" id="line-ogive">
+        <h3><span class="dot"></span> Line Graphs &amp; Ogives</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Line Graph</div>
+            <div class="definition">Grafik garis yang menunjukkan perubahan data dari waktu ke waktu atau urutan tertentu. Cocok untuk data kuantitatif kontinu.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Ogive (Poligon Frekuensi Kumulatif)</div>
+            <div class="definition">Grafik garis yang menampilkan frekuensi kumulatif. Menunjukkan data yang terus bertambah seiring nilai meningkat.</div>
+          </div>
+        </div>
+
+        <div class="diagram-area">
+          <svg width="100%" viewBox="0 0 580 240" style="max-width:580px;">
+            <text x="10" y="20" font-size="12" font-weight="600" fill="#2D3748">Ogive — Tabungan berdasarkan Usia</text>
+            <line x1="60" y1="30" x2="60" y2="200" stroke="#CBD5E0"/>
+            <line x1="60" y1="200" x2="550" y2="200" stroke="#CBD5E0"/>
+            <!-- Y axis labels -->
+            <text x="55" y="204" text-anchor="end" font-size="9" fill="#718096">0</text>
+            <text x="55" y="160" text-anchor="end" font-size="9" fill="#718096">15K</text>
+            <text x="55" y="120" text-anchor="end" font-size="9" fill="#718096">30K</text>
+            <text x="55" y="80" text-anchor="end" font-size="9" fill="#718096">45K</text>
+            <text x="55" y="40" text-anchor="end" font-size="9" fill="#718096">60K</text>
+            <!-- Data line -->
+            <polyline points="80,195,130,180,180,168,230,150,280,128,330,105,380,80,430,58,480,40" fill="none" stroke="#E8735A" stroke-width="2.5"/>
+            <!-- Dots -->
+            <circle cx="80" cy="195" r="4" fill="#E8735A"/>
+            <circle cx="130" cy="180" r="4" fill="#E8735A"/>
+            <circle cx="180" cy="168" r="4" fill="#E8735A"/>
+            <circle cx="230" cy="150" r="4" fill="#E8735A"/>
+            <circle cx="280" cy="128" r="4" fill="#E8735A"/>
+            <circle cx="330" cy="105" r="4" fill="#E8735A"/>
+            <circle cx="380" cy="80" r="4" fill="#E8735A"/>
+            <circle cx="430" cy="58" r="4" fill="#E8735A"/>
+            <circle cx="480" cy="40" r="4" fill="#E8735A"/>
+            <!-- X labels -->
+            <text x="80" y="215" text-anchor="middle" font-size="9" fill="#718096">30</text>
+            <text x="130" y="215" text-anchor="middle" font-size="9" fill="#718096">31</text>
+            <text x="180" y="215" text-anchor="middle" font-size="9" fill="#718096">32</text>
+            <text x="230" y="215" text-anchor="middle" font-size="9" fill="#718096">33</text>
+            <text x="280" y="215" text-anchor="middle" font-size="9" fill="#718096">34</text>
+            <text x="330" y="215" text-anchor="middle" font-size="9" fill="#718096">35</text>
+            <text x="380" y="215" text-anchor="middle" font-size="9" fill="#718096">36</text>
+            <text x="430" y="215" text-anchor="middle" font-size="9" fill="#718096">37</text>
+            <text x="480" y="215" text-anchor="middle" font-size="9" fill="#718096">38</text>
+            <text x="310" y="232" text-anchor="middle" font-size="10" font-weight="600" fill="#4A5568">Usia</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- TWO-WAY TABLES -->
+      <div class="section" id="two-way">
+        <h3><span class="dot"></span> Two-Way Tables</h3>
+        <p>Two-way tables membandingkan dua variabel kategorik sekaligus, sehingga kita bisa melihat hubungan di antara keduanya.</p>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Comparison Bar Graph</div>
+            <div class="definition">Bar chart dengan beberapa bar per kategori, membandingkan beberapa kelompok sekaligus (misal: data dari beberapa tahun berbeda).</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Comparison Line Graph</div>
+            <div class="definition">Beberapa garis dalam satu grafik, masing-masing mewakili satu kelompok/kategori untuk perbandingan tren.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VENN DIAGRAMS -->
+      <div class="section" id="venn">
+        <h3><span class="dot"></span> Venn Diagrams</h3>
+        <p>Diagram Venn digunakan untuk memvisualisasikan hubungan antara himpunan-himpunan data, terutama irisan dan gabungan.</p>
+
+        <div class="diagram-area">
+          <svg width="100%" viewBox="0 0 400 220" style="max-width:400px;">
+            <text x="200" y="20" text-anchor="middle" font-size="13" font-weight="600" fill="#2D3748">Venn Diagram — Hewan Peliharaan</text>
+            <!-- Outer rectangle = Universal set -->
+            <rect x="20" y="35" width="360" height="170" rx="8" fill="#EDF2F7" stroke="#CBD5E0"/>
+            <!-- Circle 1 (Dogs) -->
+            <circle cx="145" cy="120" r="65" fill="#E8735A" opacity="0.3" stroke="#E8735A" stroke-width="1.5"/>
+            <!-- Circle 2 (Birds) -->
+            <circle cx="155" cy="130" r="55" fill="#63B3ED" opacity="0.25" stroke="#63B3ED" stroke-width="1.5"/>
+            <!-- Circle 3 (Cats) -->
+            <circle cx="220" cy="120" r="60" fill="#68D391" opacity="0.25" stroke="#68D391" stroke-width="1.5"/>
+            <!-- Labels -->
+            <text x="105" y="72" font-size="11" font-weight="600" fill="#C05621">Dogs</text>
+            <text x="135" y="185" font-size="11" font-weight="600" fill="#2B6CB0">Birds</text>
+            <text x="255" y="72" font-size="11" font-weight="600" fill="#276749">Cats</text>
+            <!-- Numbers in regions -->
+            <text x="112" y="112" text-anchor="middle" font-size="14" font-weight="700" fill="#2D3748">2</text>
+            <text x="148" y="112" text-anchor="middle" font-size="14" font-weight="700" fill="#2D3748">3</text>
+            <text x="170" y="125" text-anchor="middle" font-size="14" font-weight="700" fill="#2D3748">6</text>
+            <text x="200" y="112" text-anchor="middle" font-size="14" font-weight="700" fill="#2D3748">5</text>
+            <text x="230" y="112" text-anchor="middle" font-size="14" font-weight="700" fill="#2D3748">3</text>
+            <text x="155" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="#2D3748">4</text>
+            <text x="210" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="#2D3748">1</text>
+            <!-- Outside label -->
+            <text x="350" y="60" text-anchor="middle" font-size="14" font-weight="700" fill="#718096">7</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- FREQUENCY & DOT PLOTS -->
+      <div class="section" id="freq-dot">
+        <h3><span class="dot"></span> Frequency Tables &amp; Dot Plots</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Frequency Table</div>
+            <div class="definition">Tabel yang menampilkan seberapa sering atau jarang sesuatu terjadi. Mencatat frekuensi kemunculan setiap nilai/kategori.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Dot Plot</div>
+            <div class="definition">Plot yang dapat digunakan untuk menunjukkan frekuensi dataset yang kecil. Setiap titik mewakili satu data.</div>
+          </div>
+        </div>
+
+        <div class="diagram-area">
+          <svg width="100%" viewBox="0 0 500 200" style="max-width:500px;">
+            <text x="10" y="20" font-size="12" font-weight="600" fill="#2D3748">Dot Plot — Jenis Kendaraan</text>
+            <line x1="130" y1="30" x2="130" y2="185" stroke="#CBD5E0" stroke-width="1.5"/>
+            <!-- Labels + dots -->
+            <!-- Compact: 7 dots -->
+            <text x="120" y="50" text-anchor="end" font-size="11" fill="#4A5568">Compact</text>
+            <circle cx="145" cy="46" r="7" fill="#E8735A"/><circle cx="162" cy="46" r="7" fill="#E8735A"/><circle cx="179" cy="46" r="7" fill="#E8735A"/>
+            <circle cx="196" cy="46" r="7" fill="#E8735A"/><circle cx="213" cy="46" r="7" fill="#E8735A"/><circle cx="230" cy="46" r="7" fill="#E8735A"/>
+            <circle cx="247" cy="46" r="7" fill="#E8735A"/>
+            <!-- Sedan: 4 dots -->
+            <text x="120" y="80" text-anchor="end" font-size="11" fill="#4A5568">Sedan</text>
+            <circle cx="145" cy="76" r="7" fill="#E8735A"/><circle cx="162" cy="76" r="7" fill="#E8735A"/>
+            <circle cx="179" cy="76" r="7" fill="#E8735A"/><circle cx="196" cy="76" r="7" fill="#E8735A"/>
+            <!-- SUV: 12 dots -->
+            <text x="120" y="112" text-anchor="end" font-size="11" fill="#4A5568">SUV</text>
+            <circle cx="145" cy="108" r="7" fill="#E8735A"/><circle cx="162" cy="108" r="7" fill="#E8735A"/><circle cx="179" cy="108" r="7" fill="#E8735A"/>
+            <circle cx="196" cy="108" r="7" fill="#E8735A"/><circle cx="213" cy="108" r="7" fill="#E8735A"/><circle cx="230" cy="108" r="7" fill="#E8735A"/>
+            <circle cx="247" cy="108" r="7" fill="#E8735A"/><circle cx="264" cy="108" r="7" fill="#E8735A"/><circle cx="281" cy="108" r="7" fill="#E8735A"/>
+            <circle cx="298" cy="108" r="7" fill="#E8735A"/><circle cx="315" cy="108" r="7" fill="#E8735A"/><circle cx="332" cy="108" r="7" fill="#E8735A"/>
+            <!-- Van: 9 dots -->
+            <text x="120" y="144" text-anchor="end" font-size="11" fill="#4A5568">Van</text>
+            <circle cx="145" cy="140" r="7" fill="#E8735A"/><circle cx="162" cy="140" r="7" fill="#E8735A"/><circle cx="179" cy="140" r="7" fill="#E8735A"/>
+            <circle cx="196" cy="140" r="7" fill="#E8735A"/><circle cx="213" cy="140" r="7" fill="#E8735A"/><circle cx="230" cy="140" r="7" fill="#E8735A"/>
+            <circle cx="247" cy="140" r="7" fill="#E8735A"/><circle cx="264" cy="140" r="7" fill="#E8735A"/><circle cx="281" cy="140" r="7" fill="#E8735A"/>
+            <!-- Truck: 3 dots -->
+            <text x="120" y="172" text-anchor="end" font-size="11" fill="#4A5568">Truck</text>
+            <circle cx="145" cy="168" r="7" fill="#E8735A"/><circle cx="162" cy="168" r="7" fill="#E8735A"/><circle cx="179" cy="168" r="7" fill="#E8735A"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- RELATIVE FREQUENCY TABLES -->
+      <div class="section" id="rel-freq">
+        <h3><span class="dot"></span> Relative Frequency Tables</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Relative Frequency Table</div>
+            <div class="definition">Tabel yang menampilkan persentase, bukan jumlah aktual.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Column-Relative Frequency Table</div>
+            <div class="definition">Tabel frekuensi relatif di mana jumlah kolom = 1,00, tetapi baris tidak.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Row-Relative Frequency Table</div>
+            <div class="definition">Tabel frekuensi relatif di mana jumlah baris = 1,00, tetapi kolom tidak.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Total-Relative Frequency Table</div>
+            <div class="definition">Tabel frekuensi relatif di mana baik baris maupun kolom jumlahnya = 1,00. Sel grand total selalu bernilai 1,00.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOINT DISTRIBUTIONS -->
+      <div class="section" id="joint">
+        <h3><span class="dot"></span> Joint Distributions</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Joint Distribution</div>
+            <div class="definition">Tabel persentase mirip tabel frekuensi relatif. Bedanya, menampilkan distribusi satu set data terhadap distribusi set data lain.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Marginal Distribution</div>
+            <div class="definition">Kolom total atau baris total dalam distribusi bersama (joint distribution).</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Conditional Distribution</div>
+            <div class="definition">Distribusi satu variabel, diberikan nilai tertentu dari variabel lainnya.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTOGRAMS -->
+      <div class="section" id="histogram">
+        <h3><span class="dot"></span> Histograms &amp; Stem-and-Leaf Plots</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Histogram</div>
+            <div class="definition">Seperti bar chart, tetapi data dikumpulkan dalam "bins" berukuran sama. Tidak ada celah antara batang karena merepresentasikan data kontinu.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Stem-and-Leaf Plot</div>
+            <div class="definition">Mengelompokkan data berdasarkan digit pertama. "Stem" (batang) adalah angka di kiri, "leaf" (daun) adalah angka di kanan.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Class Interval / Bin</div>
+            <div class="definition">Setiap kelompok/bucket dalam histogram.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Class Width</div>
+            <div class="definition">Interval di mana kelas didefinisikan.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Class Midpoint</div>
+            <div class="definition">Nilai di tengah antara batas bawah dan atas kelas.</div>
+          </div>
+        </div>
+
+        <h4>Cara Membuat Histogram</h4>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-body">Urutkan dataset secara ascending, lalu temukan range (nilai terbesar − nilai terkecil).</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-body">Tentukan jumlah bins. Aturan umum: gunakan 5–6 kelas untuk sebagian besar data; hingga 20 kelas untuk dataset yang lebih besar.</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-body">Bagi range dengan jumlah kelas, lalu bulatkan ke atas untuk mendapatkan class width.</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-body">Buat tabel dengan setiap kelas di baris terpisah.</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-body">Hitung frekuensi setiap kelas. Untuk interval overlapping seperti 0–4 dan 4–8, nilai 4 dimasukkan ke interval kedua.</div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-body">Gambar histogram dengan kelas di sumbu horizontal dan frekuensi di sumbu vertikal.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- BAB 2: ANALYZING DATA -->
+    <!-- ======================================= -->
+    <div class="chapter" id="analyzing-data">
+      <div class="chapter-eyebrow">Bab 2</div>
+      <h2>Analisis Data</h2>
+
+      <div class="section" id="central">
+        <h3><span class="dot"></span> Ukuran Pemusatan (Measures of Central Tendency)</h3>
+        <p>Ukuran pemusatan adalah cara yang berbeda untuk menggambarkan "tengah", "pusat", atau nilai paling khas dari data.</p>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Mean (Rata-rata)</div>
+            <div class="definition">Titik keseimbangan data. Dihitung dengan menjumlahkan semua data dibagi jumlah data.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Median</div>
+            <div class="definition">Nilai di tengah dataset ketika semua titik data diurutkan dari terkecil ke terbesar.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Mode</div>
+            <div class="definition">Nilai dalam dataset yang paling sering muncul.</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Rumus Mean (Rata-rata)</div>
+          \[ \mu = \frac{\sum_{i=1}^{n} x_i}{n} = \frac{\text{jumlah semua data}}{\text{banyaknya data}} \]
+          <p>di mana \(x_i\) adalah setiap nilai data dan \(n\) adalah banyaknya data.</p>
+        </div>
+      </div>
+
+      <div class="section" id="spread">
+        <h3><span class="dot"></span> Ukuran Penyebaran (Measures of Spread)</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Spread / Dispersion / Scatter</div>
+            <div class="definition">Bagaimana dan seberapa jauh dataset tersebar di sekitar pusatnya.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Range</div>
+            <div class="definition">Selisih antara nilai terbesar dan terkecil dalam dataset.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Quartiles (Kuartil)</div>
+            <div class="definition">Nilai yang menandai persentil ke-25, 50, 75, dan 100 dari data: Q₁, Q₂, Q₃, dan Q₄.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">IQR (Interquartile Range)</div>
+            <div class="definition">Selisih antara kuartil pertama dan ketiga: Q₃ − Q₁. Mengukur rentang 50% data tengah.</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Rumus</div>
+          \[ \text{Range} = x_{\max} - x_{\min} \]
+          \[ \text{IQR} = Q_3 - Q_1 \]
+        </div>
+      </div>
+
+      <div class="section" id="outliers">
+        <h3><span class="dot"></span> Mengubah Data &amp; Outlier</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Shifting (Menggeser)</div>
+            <div class="definition">Menambah atau mengurangi nilai dari setiap titik data. Mengubah mean, median, dan mode, tetapi TIDAK mengubah range atau IQR.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Scaling (Menskalakan)</div>
+            <div class="definition">Mengalikan atau membagi nilai dari setiap titik data. Mengubah mean, median, mode, range, DAN IQR.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Outlier</div>
+            <div class="definition">Angka di ujung atas atau ujung bawah yang ekstrem dalam dataset.</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">⚠️ Aturan 1.5-IQR untuk Outlier</div>
+          <p>Outlier rendah: nilai &lt; Q₁ − 1.5(IQR) | Outlier tinggi: nilai &gt; Q₃ + 1.5(IQR)</p>
+        </div>
+
+        <h4>Ringkasan Dampak Perubahan Data</h4>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Operasi</th><th>Mean</th><th>Median</th><th>Mode</th><th>Range</th><th>IQR</th><th>Std Dev</th></tr></thead>
+            <tbody>
+              <tr><td>Shifting (+c atau −c)</td><td>Berubah</td><td>Berubah</td><td>Berubah</td><td>Tidak</td><td>Tidak</td><td>Tidak</td></tr>
+              <tr><td>Scaling (×k atau ÷k)</td><td>Berubah</td><td>Berubah</td><td>Berubah</td><td>Berubah</td><td>Berubah</td><td>Berubah ×k</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section" id="boxplot">
+        <h3><span class="dot"></span> Box-and-Whisker Plot</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Box Plot</div>
+            <div class="definition">Plot yang merepresentasikan median dan penyebaran data sekaligus. Kotak membentang dari Q₁ ke Q₃; whisker membentang ke ujung range.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Five-Number Summary</div>
+            <div class="definition">Ringkasan yang mencakup: Minimum, Q₁, Median, Q₃, dan Maximum.</div>
+          </div>
+        </div>
+
+        <div class="diagram-area">
+          <svg width="100%" viewBox="0 0 560 150" style="max-width:560px;">
+            <text x="280" y="20" text-anchor="middle" font-size="12" font-weight="600" fill="#2D3748">Box-and-Whisker Plot</text>
+            <!-- Number line -->
+            <line x1="50" y1="100" x2="520" y2="100" stroke="#CBD5E0" stroke-width="1"/>
+            <!-- Tick marks + labels 0-16 -->
+            <line x1="50" y1="96" x2="50" y2="104" stroke="#CBD5E0"/><text x="50" y="118" text-anchor="middle" font-size="9" fill="#718096">0</text>
+            <line x1="110" y1="96" x2="110" y2="104" stroke="#CBD5E0"/><text x="110" y="118" text-anchor="middle" font-size="9" fill="#718096">2</text>
+            <line x1="170" y1="96" x2="170" y2="104" stroke="#CBD5E0"/><text x="170" y="118" text-anchor="middle" font-size="9" fill="#718096">4</text>
+            <line x1="230" y1="96" x2="230" y2="104" stroke="#CBD5E0"/><text x="230" y="118" text-anchor="middle" font-size="9" fill="#718096">6</text>
+            <line x1="290" y1="96" x2="290" y2="104" stroke="#CBD5E0"/><text x="290" y="118" text-anchor="middle" font-size="9" fill="#718096">8</text>
+            <line x1="350" y1="96" x2="350" y2="104" stroke="#CBD5E0"/><text x="350" y="118" text-anchor="middle" font-size="9" fill="#718096">10</text>
+            <line x1="410" y1="96" x2="410" y2="104" stroke="#CBD5E0"/><text x="410" y="118" text-anchor="middle" font-size="9" fill="#718096">12</text>
+            <line x1="470" y1="96" x2="470" y2="104" stroke="#CBD5E0"/><text x="470" y="118" text-anchor="middle" font-size="9" fill="#718096">14</text>
+            <line x1="500" y1="96" x2="500" y2="104" stroke="#CBD5E0"/><text x="500" y="118" text-anchor="middle" font-size="9" fill="#718096">15</text>
+            <!-- Min=2, Q1=5, Median=11, Q3=13, Max=14 -->
+            <!-- Scale: 0→50, 16→530, each unit=30px -->
+            <!-- Min=2 → x=110, Q1=5 → x=200, Med=11 → x=380, Q3=13 → x=440, Max=14 → x=470 -->
+            <!-- Whisker left -->
+            <line x1="110" y1="100" x2="200" y2="100" stroke="#2D3748" stroke-width="2"/>
+            <!-- Box -->
+            <rect x="200" y="72" width="240" height="56" fill="#FDF0EC" stroke="#E8735A" stroke-width="2" rx="3"/>
+            <!-- Median line -->
+            <line x1="380" y1="72" x2="380" y2="128" stroke="#E8735A" stroke-width="3"/>
+            <!-- Whisker right -->
+            <line x1="440" y1="100" x2="470" y2="100" stroke="#2D3748" stroke-width="2"/>
+            <!-- Endpoints -->
+            <circle cx="110" cy="100" r="5" fill="#2D3748"/>
+            <circle cx="470" cy="100" r="5" fill="#2D3748"/>
+            <!-- Labels -->
+            <text x="110" y="62" text-anchor="middle" font-size="10" fill="#E8735A">Min=2</text>
+            <text x="200" y="62" text-anchor="middle" font-size="10" fill="#E8735A">Q₁=5</text>
+            <text x="380" y="62" text-anchor="middle" font-size="10" fill="#E8735A">Med=11</text>
+            <text x="440" y="62" text-anchor="middle" font-size="10" fill="#E8735A">Q₃=13</text>
+            <text x="470" y="62" text-anchor="middle" font-size="10" fill="#E8735A">Max=14</text>
+          </svg>
+        </div>
+
+        <div class="table-wrapper">
+          <table style="max-width:400px;">
+            <thead><tr><th>Min</th><th>Q₁</th><th>Median</th><th>Q₃</th><th>Max</th></tr></thead>
+            <tbody><tr><td>2</td><td>5</td><td>11</td><td>13</td><td>14</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- BAB 3: DATA DISTRIBUTIONS -->
+    <!-- ======================================= -->
+    <div class="chapter" id="data-distributions">
+      <div class="chapter-eyebrow">Bab 3</div>
+      <h2>Distribusi Data</h2>
+
+      <div class="section" id="mean-var-std">
+        <h3><span class="dot"></span> Mean, Varians &amp; Standar Deviasi</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Population (Populasi)</div>
+            <div class="definition">Seluruh kelompok subjek yang kita minati.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Sample (Sampel)</div>
+            <div class="definition">Bagian dari populasi yang diambil sebagai wakil.</div>
+          </div>
+        </div>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Population Mean</div>
+            \[ \mu = \frac{\sum_{i=1}^{N} x_i}{N} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Sample Mean</div>
+            \[ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Population Variance</div>
+            \[ \sigma^2 = \frac{\sum_{i=1}^{N}(x_i - \mu)^2}{N} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Sample Variance (biased)</div>
+            \[ s^2 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Sample Variance (unbiased)</div>
+            \[ s^2_{n-1} = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Population Std Deviation</div>
+            \[ \sigma = \sqrt{\frac{\sum_{i=1}^{N}(x_i - \mu)^2}{N}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Sample Std Deviation</div>
+            \[ s = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}} \]
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">💡 Catatan Penting</div>
+          <p>Untuk varians sampel, gunakan <strong>n−1</strong> (bukan n) agar estimasi tidak bias. Ini disebut "Bessel's correction".</p>
+        </div>
+      </div>
+
+      <div class="section" id="freq-poly">
+        <h3><span class="dot"></span> Histogram Frekuensi, Poligon &amp; Density Curve</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Histogram / Frequency Histogram</div>
+            <div class="definition">Menampilkan frekuensi kemunculan setiap kategori dalam bentuk batang.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Relative Frequency Histogram</div>
+            <div class="definition">Sama seperti histogram biasa, tetapi frekuensi setiap kategori ditampilkan sebagai persentase dari total data.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Frequency Polygon</div>
+            <div class="definition">Bentuk yang dibuat dengan menghubungkan puncak setiap batang dalam frequency histogram.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Density Curve</div>
+            <div class="definition">Bentuk yang dibuat dengan memperhalus frequency polygon. Luas di bawah density curve selalu = 100% atau 1.0.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="skew">
+        <h3><span class="dot"></span> Distribusi Simetris, Miring &amp; Outlier</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Symmetric Distribution</div>
+            <div class="definition">Mean dan median berada tepat di pusat distribusi, dengan jumlah data yang sama di kiri dan kanan.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Normal Distribution</div>
+            <div class="definition">Distribusi simetris berbentuk lonceng (bell-shaped). Ini adalah distribusi paling penting dalam statistik.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Left-Skewed (Negatif)</div>
+            <div class="definition">Ekor di kiri. Urutan dari kiri ke kanan: Mean → Median → Mode.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Right-Skewed (Positif)</div>
+            <div class="definition">Ekor di kanan. Urutan dari kiri ke kanan: Mode → Median → Mean.</div>
+          </div>
+        </div>
+
+        <div class="diagram-area">
+          <svg width="100%" viewBox="0 0 560 160" style="max-width:560px;">
+            <!-- Normal Distribution -->
+            <text x="90" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="#2D3748">Simetris / Normal</text>
+            <path d="M30,130 Q60,130 90,60 Q120,130 150,130" fill="#E8735A" opacity="0.2" stroke="#E8735A" stroke-width="2"/>
+            <line x1="90" y1="60" x2="90" y2="130" stroke="#E8735A" stroke-width="1.5" stroke-dasharray="4"/>
+            <text x="90" y="145" text-anchor="middle" font-size="9" fill="#E8735A">mean=median=mode</text>
+
+            <!-- Left skewed -->
+            <text x="280" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="#2D3748">Miring Kiri (Negatif)</text>
+            <path d="M200,130 Q240,130 290,55 Q310,130 360,130" fill="#63B3ED" opacity="0.2" stroke="#63B3ED" stroke-width="2"/>
+            <line x1="225" y1="110" x2="225" y2="130" stroke="#63B3ED" stroke-width="1.5" stroke-dasharray="4"/>
+            <text x="225" y="143" text-anchor="middle" font-size="8" fill="#63B3ED">mean</text>
+            <line x1="250" y1="90" x2="250" y2="130" stroke="#63B3ED" stroke-width="1.5" stroke-dasharray="4"/>
+            <text x="250" y="143" text-anchor="middle" font-size="8" fill="#63B3ED">med</text>
+            <line x1="290" y1="55" x2="290" y2="130" stroke="#63B3ED" stroke-width="1.5" stroke-dasharray="4"/>
+            <text x="290" y="143" text-anchor="middle" font-size="8" fill="#63B3ED">mode</text>
+
+            <!-- Right skewed -->
+            <text x="470" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="#2D3748">Miring Kanan (Positif)</text>
+            <path d="M390,130 Q410,130 430,55 Q480,130 530,130" fill="#68D391" opacity="0.2" stroke="#68D391" stroke-width="2"/>
+            <line x1="430" y1="55" x2="430" y2="130" stroke="#68D391" stroke-width="1.5" stroke-dasharray="4"/>
+            <text x="430" y="143" text-anchor="middle" font-size="8" fill="#276749">mode</text>
+            <line x1="470" y1="90" x2="470" y2="130" stroke="#68D391" stroke-width="1.5" stroke-dasharray="4"/>
+            <text x="470" y="143" text-anchor="middle" font-size="8" fill="#276749">med</text>
+            <line x1="500" y1="110" x2="500" y2="130" stroke="#68D391" stroke-width="1.5" stroke-dasharray="4"/>
+            <text x="500" y="143" text-anchor="middle" font-size="8" fill="#276749">mean</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="section" id="normal-z">
+        <h3><span class="dot"></span> Distribusi Normal &amp; Z-Score</h3>
+
+        <div class="highlight-rule">
+          <div class="rule-card rule-68">
+            <div class="pct">68%</div>
+            <div class="desc">data berada dalam <strong>1 standar deviasi</strong> dari mean</div>
+          </div>
+          <div class="rule-card rule-95">
+            <div class="pct">95%</div>
+            <div class="desc">data berada dalam <strong>2 standar deviasi</strong> dari mean</div>
+          </div>
+          <div class="rule-card rule-997">
+            <div class="pct">99.7%</div>
+            <div class="desc">data berada dalam <strong>3 standar deviasi</strong> dari mean</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">📐 Empirical Rule (Aturan 68-95-99.7)</div>
+          <p>Untuk distribusi normal apapun, terdapat kemungkinan 68%, 95%, dan 99.7% bahwa satu titik data jatuh dalam 1, 2, dan 3 standar deviasi dari mean.</p>
+        </div>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Percentile (Persentil)</div>
+            <div class="definition">n persen nilai dalam dataset berada di bawah persentil ke-n.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Z-Score</div>
+            <div class="definition">Skor yang memberitahu jumlah standar deviasi antara titik data x dan mean μ. Data dianggap tidak biasa jika z = ±3.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Threshold</div>
+            <div class="definition">Titik batas yang telah ditentukan sebelumnya dalam dataset.</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Rumus Z-Score</div>
+          \[ z = \frac{x - \mu}{\sigma} \]
+          <p>Keterangan: x = nilai data, μ = mean populasi, σ = standar deviasi populasi</p>
+        </div>
+      </div>
+
+      <div class="section" id="chebyshev">
+        <h3><span class="dot"></span> Teorema Chebyshev</h3>
+        <p>Teorema Chebyshev berlaku untuk distribusi berbentuk apapun (tidak hanya normal), sehingga lebih konservatif dari Empirical Rule.</p>
+
+        <div class="formula-box">
+          <div class="formula-label">Teorema Chebyshev</div>
+          \[ \text{Paling sedikit } \left(1 - \frac{1}{k^2}\right) \times 100\% \text{ data berada dalam } k \text{ standar deviasi dari mean, untuk } k > 1 \]
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>k (standar deviasi)</th><th>Minimal % data</th><th>Rumus</th></tr></thead>
+            <tbody>
+              <tr><td>k = 2</td><td>75%</td><td>1 − 1/4 = 0.75</td></tr>
+              <tr><td>k = 3</td><td>89%</td><td>1 − 1/9 ≈ 0.89</td></tr>
+              <tr><td>k = 4</td><td>94%</td><td>1 − 1/16 = 0.9375</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section" id="covariance">
+        <h3><span class="dot"></span> Kovarians (Covariance)</h3>
+        <p>Kovarians mengukur seberapa banyak dua variabel acak berubah bersama. Mencerminkan hubungan <em>arah</em>, bukan besar hubungan.</p>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Population Covariance</div>
+            \[ \sigma_{xy} = \frac{\sum(x_i - \mu_x)(y_i - \mu_y)}{N} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Sample Covariance</div>
+            \[ s_{xy} = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{n-1} \]
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Nilai Kovarians</th><th>Artinya</th></tr></thead>
+            <tbody>
+              <tr><td>Positif</td><td>Hubungan linear positif: kedua variabel naik/turun bersama</td></tr>
+              <tr><td>≈ 0</td><td>Tidak ada hubungan linear antara variabel</td></tr>
+              <tr><td>Negatif</td><td>Hubungan linear negatif: satu naik, yang lain turun</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section" id="correlation">
+        <h3><span class="dot"></span> Koefisien Korelasi</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Perfectly Correlated</div>
+            <div class="definition">Perubahan spesifik pada satu variabel menghasilkan perubahan yang tepat dan dapat diprediksi pada variabel lain.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Somewhat Correlated</div>
+            <div class="definition">Perubahan pada satu variabel menghasilkan perubahan yang dapat diprediksi secara umum pada variabel lain.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Uncorrelated</div>
+            <div class="definition">Perubahan pada satu variabel tidak menghasilkan perubahan yang dapat diprediksi pada variabel lain.</div>
+          </div>
+        </div>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Population Pearson r</div>
+            \[ \rho_{xy} = \frac{\sigma_{xy}}{\sigma_x \sigma_y} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Sample Pearson r</div>
+            \[ r_{xy} = \frac{s_{xy}}{s_x s_y} = \frac{\sum(x_i-\bar{x})(y_i-\bar{y})}{(n-1)s_x s_y} \]
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Nilai r</th><th>Kekuatan Korelasi</th></tr></thead>
+            <tbody>
+              <tr><td>0.70 hingga 1.00 (atau −0.70 hingga −1.00)</td><td>Korelasi kuat positif (atau negatif)</td></tr>
+              <tr><td>0.30 hingga 0.70 (atau −0.30 hingga −0.70)</td><td>Korelasi sedang positif (atau negatif)</td></tr>
+              <tr><td>0 hingga 0.30 (atau 0 hingga −0.30)</td><td>Korelasi lemah positif (atau negatif)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section" id="weighted">
+        <h3><span class="dot"></span> Rata-rata Berbobot &amp; Data Berkelompok</h3>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Weighted Population Mean</div>
+            \[ \mu = \frac{\sum_{i=1}^{N} w_i x_i}{\sum_{i=1}^{N} w_i} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Weighted Sample Mean</div>
+            \[ \bar{x} = \frac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Grouped Data Population Mean</div>
+            \[ \mu = \frac{\sum_{i=1}^{N} f_i M_i}{N} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Grouped Data Sample Mean</div>
+            \[ \bar{x} = \frac{\sum_{i=1}^{n} f_i M_i}{n} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Grouped Population Variance</div>
+            \[ \sigma^2 = \frac{\sum_{i=1}^{N} f_i(M_i - \mu)^2}{N} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Grouped Sample Variance</div>
+            \[ s^2 = \frac{\sum_{i=1}^{n} f_i(M_i - \bar{x})^2}{n-1} \]
+          </div>
+        </div>
+        <p style="font-size:0.85rem;">Keterangan: \(f_i\) = frekuensi kelas ke-i, \(M_i\) = titik tengah kelas ke-i, \(w_i\) = bobot.</p>
+      </div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- BAB 4: PROBABILITY -->
+    <!-- ======================================= -->
+    <div class="chapter" id="probability">
+      <div class="chapter-eyebrow">Bab 4</div>
+      <h2>Probabilitas</h2>
+
+      <div class="section" id="simple-prob">
+        <h3><span class="dot"></span> Probabilitas Sederhana</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Probabilitas</div>
+            <div class="definition">Seberapa besar kemungkinan suatu kejadian terjadi. Semua probabilitas adalah bilangan antara 0 dan 1.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Sample Space</div>
+            <div class="definition">Kumpulan "semua kemungkinan hasil" — penyebut dari rumus probabilitas sederhana.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Experiment</div>
+            <div class="definition">Satu kejadian dalam sample space.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Experimental / Empirical Probability</div>
+            <div class="definition">Probabilitas yang kita temukan ketika menjalankan eksperimen. Berubah seiring eksperimen berjalan. Mendekati probabilitas teoritis seiring banyaknya eksperimen.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Theoretical / Classical Probability</div>
+            <div class="definition">Probabilitas bahwa suatu kejadian akan terjadi, berdasarkan eksperimen tak terbatas. Berasal dari rumus probabilitas sederhana.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Law of Large Numbers</div>
+            <div class="definition">Jika kita bisa menjalankan eksperimen tak terbatas, probabilitas eksperimental akan sama dengan probabilitas teoritis.</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Rumus Probabilitas Sederhana</div>
+          \[ P(\text{kejadian}) = \frac{\text{hasil yang memenuhi kriteria}}{\text{semua kemungkinan hasil yang sama}} \]
+        </div>
+      </div>
+
+      <div class="section" id="addition">
+        <h3><span class="dot"></span> Aturan Penjumlahan, Union &amp; Intersection</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Union P(A ∪ B)</div>
+            <div class="definition">Probabilitas A atau B atau keduanya terjadi.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Intersection P(A ∩ B)</div>
+            <div class="definition">Probabilitas A dan B keduanya terjadi bersamaan.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Mutually Exclusive (Disjoint)</div>
+            <div class="definition">Kejadian yang tidak bisa terjadi bersamaan. P(A ∩ B) = 0.</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Addition Rule (Aturan Penjumlahan)</div>
+          \[ P(A \cup B) = P(A) + P(B) - P(A \cap B) \]
+          <p>Untuk kejadian mutually exclusive: P(A ∪ B) = P(A) + P(B)</p>
+        </div>
+      </div>
+
+      <div class="section" id="independent">
+        <h3><span class="dot"></span> Kejadian Independen, Dependen &amp; Probabilitas Bersyarat</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Independent Events</div>
+            <div class="definition">Kejadian yang tidak saling mempengaruhi satu sama lain, seperti dua lemparan koin terpisah.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Dependent Events</div>
+            <div class="definition">Kejadian yang saling mempengaruhi, seperti mengambil dua kartu dari dek tanpa mengembalikan kartu pertama.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Conditional Probability</div>
+            <div class="definition">Probabilitas beberapa kejadian dependen terjadi.</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Multiplication Rule (Aturan Perkalian)</div>
+          \[ P(A \text{ dan } B) = P(A) \cdot P(B) \quad \text{(untuk kejadian independen)} \]
+        </div>
+      </div>
+
+      <div class="section" id="bayes">
+        <h3><span class="dot"></span> Teorema Bayes</h3>
+        <p>Teorema Bayes memberitahu kita probabilitas suatu kejadian, dengan pengetahuan awal tentang kejadian terkait yang terjadi sebelumnya.</p>
+
+        <div class="callout">
+          <div class="callout-title">💡 Cara Menggunakan Teorema Bayes</div>
+          <p>1) Tuliskan apa yang diketahui. 2) Buat tree diagram yang mencakup semua kemungkinan. 3) "Pangkas cabang" yang tidak relevan dengan pertanyaan.</p>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Teorema Bayes</div>
+          \[ P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)} \]
+          <p>P(A|B) = probabilitas A terjadi jika B sudah terjadi</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- BAB 5: DISCRETE RANDOM VARIABLES -->
+    <!-- ======================================= -->
+    <div class="chapter" id="discrete-rv">
+      <div class="chapter-eyebrow">Bab 5</div>
+      <h2>Variabel Acak Diskrit</h2>
+
+      <div class="section" id="discrete">
+        <h3><span class="dot"></span> Probabilitas Diskrit</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Discrete Random Variable</div>
+            <div class="definition">Variabel yang hanya dapat mengambil nilai diskrit (tertentu/dapat dihitung).</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Continuous Random Variable</div>
+            <div class="definition">Variabel yang dapat mengambil nilai apapun dalam suatu interval tertentu.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Expected Value (Nilai Harapan)</div>
+            <div class="definition">Mean dari variabel acak diskrit.</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Variance of Discrete Random Variable</div>
+          \[ \sigma^2_X = \sum_{i=1}^{n} (X_i - \mu)^2 P(X_i) \]
+        </div>
+      </div>
+
+      <div class="section" id="transform">
+        <h3><span class="dot"></span> Transformasi Variabel Acak</h3>
+
+        <ul class="bullet-list">
+          <li>Menggeser (shifting) dataset tidak mempengaruhi standar deviasi.</li>
+          <li>Menskalakan (scaling) dataset dengan k, menskalakan standar deviasi dengan k.</li>
+        </ul>
+
+        <h4>Kombinasi Variabel Acak Terdistribusi Normal</h4>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Operasi</th><th>Kombinasi</th><th>Mean</th><th>Variansi</th></tr></thead>
+            <tbody>
+              <tr><td>Sum (Jumlah)</td><td>S = X + Y</td><td>\(\mu_S = \mu_X + \mu_Y\)</td><td>\(\sigma^2_S = \sigma^2_X + \sigma^2_Y\)</td></tr>
+              <tr><td>Difference (Selisih)</td><td>D = X − Y</td><td>\(\mu_D = \mu_X - \mu_Y\)</td><td>\(\sigma^2_D = \sigma^2_X + \sigma^2_Y\)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <div class="callout-title">⚠️ Perhatikan!</div>
+          <p>Untuk D = X − Y, variansnya tetap DIJUMLAHKAN (bukan dikurangi), karena variansi selalu positif.</p>
+        </div>
+      </div>
+
+      <div class="section" id="perm-comb">
+        <h3><span class="dot"></span> Permutasi &amp; Kombinasi</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Permutation (Permutasi)</div>
+            <div class="definition">Jumlah cara kita dapat mengatur sekumpulan benda, di mana <strong>urutan penting</strong>.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Combination (Kombinasi)</div>
+            <div class="definition">Jumlah cara kita dapat mengatur sekumpulan benda, di mana <strong>urutan tidak penting</strong>.</div>
+          </div>
+        </div>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Permutasi (urutan penting)</div>
+            \[ _nP_k = \frac{n!}{(n-k)!} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Kombinasi (urutan tidak penting)</div>
+            \[ _nC_k = \binom{n}{k} = \frac{n!}{k!(n-k)!} \]
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="binomial">
+        <h3><span class="dot"></span> Variabel Acak Binomial</h3>
+
+        <p>Agar variabel X menjadi variabel acak binomial, 4 kondisi harus terpenuhi:</p>
+        <ul class="bullet-list">
+          <li>Setiap trial harus independen</li>
+          <li>Setiap trial dapat disebut "sukses" atau "gagal"</li>
+          <li>Ada jumlah trial yang tetap</li>
+          <li>Probabilitas sukses pada setiap trial adalah konstan</li>
+        </ul>
+
+        <div class="formula-box">
+          <div class="formula-label">Binomial Probability</div>
+          \[ P(k \text{ sukses dalam } n \text{ percobaan}) = \binom{n}{k} p^k (1-p)^{n-k} \]
+        </div>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Mean Binomial</div>
+            \[ \mu_X = E(X) = np \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Variance Binomial</div>
+            \[ \sigma^2_X = np(1-p) \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Std Dev Binomial</div>
+            \[ \sigma_X = \sqrt{np(1-p)} \]
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Probabilitas "Minimal" dan "Maksimal"</div>
+          \[ P(\text{min 1 sukses}) = 1 - P(\text{semua gagal}) \]
+          \[ P(\text{min 1 gagal}) = 1 - P(\text{semua sukses}) \]
+        </div>
+      </div>
+
+      <div class="section" id="poisson">
+        <h3><span class="dot"></span> Distribusi Poisson</h3>
+
+        <p>Proses Poisson menghitung berapa kali suatu kejadian terjadi dalam periode waktu, area tertentu, atau pengukuran lainnya.</p>
+
+        <ul class="bullet-list">
+          <li>Eksperimen menghitung jumlah kejadian selama pengukuran tertentu</li>
+          <li>Mean sama untuk setiap interval</li>
+          <li>Jumlah kejadian di setiap interval independen dari interval lain</li>
+          <li>Interval tidak tumpang tindih</li>
+          <li>Probabilitas kejadian proporsional terhadap periode waktu</li>
+        </ul>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Poisson Probability</div>
+            \[ P(x) = \frac{\lambda^x e^{-\lambda}}{x!} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Poisson untuk Binomial</div>
+            \[ P(x) = \frac{(np)^x e^{-np}}{x!} \]
+          </div>
+        </div>
+        <p style="font-size:0.85rem;">Keterangan: λ = rata-rata kejadian per interval, e ≈ 2.71828, x = jumlah kejadian yang diamati.</p>
+      </div>
+
+      <div class="section" id="bernoulli">
+        <h3><span class="dot"></span> Variabel Acak Bernoulli</h3>
+
+        <p>Variabel acak Bernoulli adalah kategori khusus dari variabel acak binomial, dengan tepat satu trial, di mana "sukses" = 1 dan "gagal" = 0.</p>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Mean</div>
+            \[ \mu = p \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Variance</div>
+            \[ \sigma^2 = p(1-p) \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Std Dev</div>
+            \[ \sigma = \sqrt{p(1-p)} \]
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="geometric">
+        <h3><span class="dot"></span> Variabel Acak Geometrik</h3>
+
+        <p>Variabel acak geometrik: kita menjalankan trial tak terbatas hingga mendapatkan "sukses" yang didefinisikan.</p>
+
+        <ul class="bullet-list">
+          <li>Setiap trial harus independen</li>
+          <li>Setiap trial dapat disebut "sukses" atau "gagal"</li>
+          <li>Probabilitas sukses pada setiap trial adalah konstan</li>
+        </ul>
+
+        <div class="formula-box">
+          <div class="formula-label">Probabilitas Sukses pada Percobaan ke-n</div>
+          \[ P(S=n) = p(1-p)^{n-1} \]
+        </div>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Mean</div>
+            \[ \mu_X = \frac{1}{p} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Variance</div>
+            \[ \sigma^2_X = \frac{1-p}{p^2} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Std Dev</div>
+            \[ \sigma_X = \sqrt{\frac{1-p}{p^2}} \]
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- BAB 6: SAMPLING -->
+    <!-- ======================================= -->
+    <div class="chapter" id="sampling-chapter">
+      <div class="chapter-eyebrow">Bab 6</div>
+      <h2>Sampling</h2>
+
+      <div class="section" id="study-types">
+        <h3><span class="dot"></span> Jenis Studi</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Statistic</div>
+            <div class="definition">Mean, standar deviasi, proporsi, dll., untuk sampel.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Parameter</div>
+            <div class="definition">Mean, standar deviasi, proporsi, dll., untuk populasi. Kita menggunakan statistik untuk mengestimasi nilai parameter.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Observational Study</div>
+            <div class="definition">Kita hanya melihat informasi yang sudah ada tanpa menambahkan sesuatu yang akan mengubah populasi.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Treatment</div>
+            <div class="definition">Sesuatu yang mengubah populasi.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Correlation</div>
+            <div class="definition">Dua variabel berkorelasi ketika bergerak bersama secara dapat diprediksi.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Causation</div>
+            <div class="definition">Satu variabel menyebabkan variabel lain berubah. Korelasi tidak membuktikan kausalitas!</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Confounding Variable</div>
+            <div class="definition">Variabel ketiga yang mengarah pada kedua variabel yang berkorelasi.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Control Group</div>
+            <div class="definition">Kelompok yang tidak melakukan apa-apa, tidak menerima apa-apa, atau tidak dimanipulasi.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Treatment/Experimental Group</div>
+            <div class="definition">Kelompok yang melakukan sesuatu, menerima sesuatu, atau diperlakukan dengan cara tertentu.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Blind Experiment</div>
+            <div class="definition">Peserta tidak tahu apakah mereka dalam kelompok kontrol atau perlakuan.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Double-Blind Experiment</div>
+            <div class="definition">Baik peserta maupun peneliti tidak tahu siapa yang ada di kelompok mana.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Matched-Pairs Experiment</div>
+            <div class="definition">Bentuk blocking yang lebih spesifik; peserta dicocokkan berdasarkan karakteristik serupa.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="bias">
+        <h3><span class="dot"></span> Sampling &amp; Bias</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Representative / Unbiased Sample</div>
+            <div class="definition">Ketika data sampel dapat "diskalakan" ke populasi, atau ketika sampel merepresentasikan populasi dengan baik.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Bias</div>
+            <div class="definition">Ketika sesuatu membelokkan hasil kita dan membuatnya tidak akurat.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Measurement Bias</div>
+            <div class="definition">Ada yang salah dengan alat pengumpul data, sehingga menghasilkan nilai yang salah.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Social Desirability Bias</div>
+            <div class="definition">Survei kita menanyakan sesuatu dengan cara yang menghambat orang menjawab dengan jujur.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Leading Questions</div>
+            <div class="definition">Pertanyaan yang dibingkai untuk mendorong responden ke arah jawaban tertentu.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Selection Bias / Undercoverage</div>
+            <div class="definition">Kita tidak mengumpulkan data dari seluruh kelompok subjek yang seharusnya dimasukkan.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Voluntary Response Sampling</div>
+            <div class="definition">Ketika orang secara sukarela merespons atau berpartisipasi dalam studi.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Non-Response Bias</div>
+            <div class="definition">Ketika banyak orang tidak merespons survei kita.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Simple Random Sample</div>
+            <div class="definition">Kita menugaskan subjek ke kelompok secara acak penuh.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Stratified Random Sample</div>
+            <div class="definition">Kita mewajibkan jumlah subjek yang merata dari kelompok berbeda.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Clustered Random Sample</div>
+            <div class="definition">Membagi populasi menjadi kluster, lalu mengambil sampel secara acak dari kluster-kluster tersebut.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Systematic Sampling</div>
+            <div class="definition">Menugaskan nomor kepada individu dan memilih mereka pada interval tertentu.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="sdsm">
+        <h3><span class="dot"></span> Distribusi Sampel dari Sample Mean (SDSM)</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">SDSM</div>
+            <div class="definition">Distribusi probabilitas dari semua kemungkinan mean sampel untuk ukuran sampel n tertentu.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Central Limit Theorem (CLT)</div>
+            <div class="definition">Meski distribusi populasi tidak normal, selama n ≥ 30, kita dapat membuat inferensi menggunakan statistik sampel karena SDSM akan berdistribusi normal.</div>
+          </div>
+        </div>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Mean SDSM</div>
+            \[ \mu_{\bar{x}} = \mu \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Variance SDSM</div>
+            \[ \sigma^2_{\bar{x}} = \frac{\sigma^2}{n} \approx \frac{s^2}{n} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Standard Error (SE)</div>
+            \[ SE = \sigma_{\bar{x}} = \frac{\sigma}{\sqrt{n}} \approx \frac{s}{\sqrt{n}} \]
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">📌 Finite Population Correction Factor (FPC)</div>
+          <p>Jika sampling tanpa penggantian atau sampling dari lebih dari 5% populasi terbatas, kalikan standar deviasi dengan √((N−n)/(N−1)) dan variansi dengan (N−n)/(N−1).</p>
+        </div>
+
+        <h4>Kondisi untuk Inferensi dengan SDSM</h4>
+        <ul class="bullet-list">
+          <li><strong>Random:</strong> data harus dari sampel acak</li>
+          <li><strong>Normal:</strong> populasi asli normal, ATAU n ≥ 30</li>
+          <li><strong>Independent:</strong> sampling dengan penggantian, ATAU ukuran sampel ≤ 10% dari populasi total</li>
+        </ul>
+      </div>
+
+      <div class="section" id="sdsp">
+        <h3><span class="dot"></span> Distribusi Sampel dari Sample Proportion (SDSP)</h3>
+
+        <div class="formula-box">
+          <div class="formula-label">Sample Proportion</div>
+          \[ \hat{p} = \frac{x}{n} \]
+          <p>di mana x = jumlah "sukses" dalam sampel, n = ukuran sampel</p>
+        </div>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Mean SDSP</div>
+            \[ \mu_{\hat{p}} = p \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Variance SDSP</div>
+            \[ \sigma^2_{\hat{p}} = \frac{p(1-p)}{n} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Standard Error SDSP</div>
+            \[ SE = \sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}} \]
+          </div>
+        </div>
+
+        <h4>Kondisi Normal SDSP</h4>
+        <ul class="bullet-list">
+          <li>np ≥ 5 DAN n(1−p) ≥ 5</li>
+          <li>Sampling dengan penggantian, atau ukuran sampel ≤ 10% populasi</li>
+        </ul>
+      </div>
+
+      <div class="section" id="t-dist">
+        <h3><span class="dot"></span> Distribusi t (Student's t-Distribution)</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Standard Normal / Z-Distribution</div>
+            <div class="definition">Distribusi normal dengan mean μ = 0 dan standar deviasi σ = 1.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Student's t-Distribution</div>
+            <div class="definition">Mirip distribusi normal standar (simetris, bell-shaped, berpusat di 0) tetapi lebih datar dan lebar. Bentuknya tergantung degrees of freedom df = n − 1.</div>
+          </div>
+        </div>
+
+        <div class="diagram-area">
+          <svg width="100%" viewBox="0 0 500 200" style="max-width:500px;">
+            <text x="250" y="20" text-anchor="middle" font-size="12" font-weight="600" fill="#2D3748">Z-distribution vs t-distribution</text>
+            <!-- Z distribution (narrower, taller) -->
+            <path d="M50,170 Q150,170 250,30 Q350,170 450,170" fill="none" stroke="#E8735A" stroke-width="2.5"/>
+            <!-- t distribution (wider, shorter) -->
+            <path d="M20,170 Q120,170 250,70 Q380,170 480,170" fill="none" stroke="#63B3ED" stroke-width="2.5"/>
+            <!-- Axis -->
+            <line x1="50" y1="170" x2="450" y2="170" stroke="#CBD5E0"/>
+            <line x1="250" y1="170" x2="250" y2="20" stroke="#CBD5E0" stroke-dasharray="4"/>
+            <!-- Labels -->
+            <text x="50" y="170" text-anchor="middle" font-size="11" fill="#718096">-3</text>
+            <text x="150" y="170" text-anchor="middle" font-size="11" fill="#718096">-1</text>
+            <text x="250" y="185" text-anchor="middle" font-size="11" fill="#718096">0</text>
+            <text x="350" y="170" text-anchor="middle" font-size="11" fill="#718096">1</text>
+            <text x="450" y="170" text-anchor="middle" font-size="11" fill="#718096">3</text>
+            <!-- Legend -->
+            <line x1="60" y1="40" x2="90" y2="40" stroke="#E8735A" stroke-width="2.5"/>
+            <text x="95" y="44" font-size="11" fill="#4A5568">z-distribution</text>
+            <line x1="60" y1="58" x2="90" y2="58" stroke="#63B3ED" stroke-width="2.5"/>
+            <text x="95" y="62" font-size="11" fill="#4A5568">t-distribution</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- BAB 7: CONFIDENCE INTERVALS -->
+    <!-- ======================================= -->
+    <div class="chapter" id="confidence-intervals">
+      <div class="chapter-eyebrow">Bab 7</div>
+      <h2>Interval Kepercayaan (Confidence Intervals)</h2>
+
+      <div class="section" id="ci-mean">
+        <h3><span class="dot"></span> CI untuk Mean</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Point Estimate</div>
+            <div class="definition">Estimator untuk satu nilai tunggal, seperti mean sampel untuk mean populasi.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Interval Estimate</div>
+            <div class="definition">Rentang nilai yang mengestimasi interval di mana suatu parameter mungkin berada.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Confidence Level</div>
+            <div class="definition">Probabilitas bahwa interval estimasi akan mencakup parameter populasi.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Alpha (α)</div>
+            <div class="definition">α = 1 − confidence level. Probabilitas membuat Type I Error.</div>
+          </div>
+        </div>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">CI saat σ diketahui</div>
+            \[ (a,b) = \bar{x} \pm z^* \frac{\sigma}{\sqrt{n}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">CI dengan FPC</div>
+            \[ (a,b) = \bar{x} \pm z^* \frac{\sigma}{\sqrt{n}} \sqrt{\frac{N-n}{N-1}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">CI saat σ tidak diketahui / n kecil</div>
+            \[ (a,b) = \bar{x} \pm t^* \frac{s}{\sqrt{n}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Required Sample Size</div>
+            \[ n = \left(\frac{z^* \sigma}{ME}\right)^2 \]
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="ci-prop">
+        <h3><span class="dot"></span> CI untuk Proporsi</h3>
+
+        <div class="formula-box">
+          <div class="formula-label">Confidence Interval untuk Proporsi</div>
+          \[ (a,b) = \hat{p} \pm z^* \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]
+        </div>
+      </div>
+
+      <div class="section" id="ci-diff-mean">
+        <h3><span class="dot"></span> CI untuk Perbedaan Mean</h3>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Mean SDDM</div>
+            \[ \mu_{\bar{x}_1 - \bar{x}_2} = \mu_{\bar{x}_1} - \mu_{\bar{x}_2} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Standard Error SDDM</div>
+            \[ \sigma_{\bar{x}_1 - \bar{x}_2} = \sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma^2_2}{n_2}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">CI dengan σ₁,σ₂ diketahui</div>
+            \[ (\bar{x}_1 - \bar{x}_2) \pm z_{\alpha/2}\sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma^2_2}{n_2}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Pooled Std Dev (variansi sama)</div>
+            \[ s_p = \sqrt{\frac{(n_1-1)s^2_1 + (n_2-1)s^2_2}{n_1+n_2-2}} \]
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="ci-matched">
+        <h3><span class="dot"></span> CI untuk Matched-Pair</h3>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">CI saat σ_d diketahui</div>
+            \[ (a,b) = \bar{d} \pm z_{\alpha/2} \frac{\sigma_d}{\sqrt{n}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">CI saat σ_d tidak diketahui atau n &lt; 30</div>
+            \[ (a,b) = \bar{d} \pm t_{\alpha/2} \frac{s_d}{\sqrt{n}}, \quad df = n-1 \]
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="ci-diff-prop">
+        <h3><span class="dot"></span> CI untuk Perbedaan Proporsi</h3>
+
+        <div class="formula-box">
+          <div class="formula-label">CI Perbedaan Proporsi</div>
+          \[ (a,b) = (\hat{p}_1 - \hat{p}_2) \pm z_{\alpha/2} \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} + \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \]
+          <p>Jika CI mengandung 0 → kemungkinan tidak ada perbedaan proporsi. Jika CI tidak mengandung 0 → kemungkinan ada perbedaan.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- BAB 8: HYPOTHESIS TESTING -->
+    <!-- ======================================= -->
+    <div class="chapter" id="hypothesis-testing">
+      <div class="chapter-eyebrow">Bab 8</div>
+      <h2>Uji Hipotesis (Hypothesis Testing)</h2>
+
+      <div class="section" id="hypothesis">
+        <h3><span class="dot"></span> Proses Uji Hipotesis</h3>
+
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-body">Nyatakan hipotesis null (H₀) dan hipotesis alternatif (H₁).</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-body">Tentukan tingkat signifikansi (α).</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-body">Hitung test statistic.</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-body">Temukan critical value dan tentukan region penerimaan dan penolakan.</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-body">Nyatakan kesimpulan.</div></div>
+        </div>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Alternative Hypothesis (H₁)</div>
+            <div class="definition">Anomali yang kita cari dalam data; signifikansi yang kita harapkan ditemukan.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Null Hypothesis (H₀)</div>
+            <div class="definition">Kebalikan dari hipotesis alternatif; status quo yang ingin kita tolak.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="errors">
+        <h3><span class="dot"></span> Tingkat Signifikansi &amp; Error Tipe I dan II</h3>
+
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Jenis Error</th><th>Definisi</th><th>Probabilitas</th></tr></thead>
+            <tbody>
+              <tr><td>Type I Error (α)</td><td>Menolak H₀ yang sebenarnya benar (false positive)</td><td>= α (tingkat signifikansi)</td></tr>
+              <tr><td>Type II Error (β)</td><td>Menerima H₀ yang sebenarnya salah (false negative)</td><td>= β</td></tr>
+              <tr><td>Power (1−β)</td><td>Probabilitas menolak H₀ yang salah (keputusan benar)</td><td>= 1 − β</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section" id="test-stat">
+        <h3><span class="dot"></span> Test Statistics: One- &amp; Two-Tailed Tests</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Two-Tailed Test</div>
+            <div class="definition">H₁ menyatakan satu nilai ≠ nilai lain. Region penolakan di kedua sisi.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Upper-Tailed (Right-Tailed)</div>
+            <div class="definition">H₁: nilai &gt; nilai lain. Region penolakan di sisi kanan.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Lower-Tailed (Left-Tailed)</div>
+            <div class="definition">H₁: nilai &lt; nilai lain. Region penolakan di sisi kiri.</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Test Statistic Umum</div>
+          \[ \text{test statistic} = \frac{\text{observed} - \text{expected}}{\text{standard deviation}} \]
+        </div>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Z-test (σ diketahui)</div>
+            \[ z = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">T-test (σ tidak diketahui)</div>
+            \[ t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Z-test untuk Proporsi</div>
+            \[ z = \frac{\hat{p} - p_0}{\sqrt{p_0(1-p_0)/n}} \]
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="p-value">
+        <h3><span class="dot"></span> P-Value &amp; Menolak Null</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">P-Value</div>
+            <div class="definition">Tingkat signifikansi terkecil di mana kita dapat menolak H₀, dengan asumsi H₀ benar. Total area dari region penolakan.</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Aturan Keputusan</div>
+          \[ \text{Jika } p \leq \alpha \Rightarrow \text{Tolak } H_0 \]
+          \[ \text{Jika } p > \alpha \Rightarrow \text{Tidak menolak } H_0 \]
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Jenis Test</th><th>Critical Value Approach</th></tr></thead>
+            <tbody>
+              <tr><td>Lower-tailed</td><td>Tolak H₀ jika z ≤ −z_α</td></tr>
+              <tr><td>Upper-tailed</td><td>Tolak H₀ jika z ≥ z_α</td></tr>
+              <tr><td>Two-tailed</td><td>Tolak H₀ jika z ≤ −z_{α/2} atau z ≥ z_{α/2}</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section" id="diff-means">
+        <h3><span class="dot"></span> Uji Hipotesis: Perbedaan Mean</h3>
+
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Z-test, sampel besar, variansi tidak sama</div>
+            \[ z = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{\sqrt{s^2_1/n_1 + s^2_2/n_2}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Z-test, sampel besar, variansi sama</div>
+            \[ z = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{s_p\sqrt{1/n_1 + 1/n_2}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">T-test, sampel kecil, variansi tidak sama</div>
+            \[ t = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{\sqrt{s^2_1/n_1 + s^2_2/n_2}} \]
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">T-test, sampel kecil, variansi sama</div>
+            \[ t = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{s_p\sqrt{1/n_1 + 1/n_2}}, \quad df = n_1+n_2-2 \]
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="matched-test">
+        <h3><span class="dot"></span> Matched-Pair Hypothesis Testing</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Independent Samples</div>
+            <div class="definition">Observasi dari satu sampel tidak berkaitan dengan observasi dari sampel lain.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Dependent Samples</div>
+            <div class="definition">Observasi dari satu sampel berkaitan dengan observasi dari sampel lain.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Matched-Pair Test</div>
+            <div class="definition">Uji hipotesis dengan sampel dependen.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="diff-prop">
+        <h3><span class="dot"></span> Uji Hipotesis: Perbedaan Proporsi</h3>
+
+        <div class="formula-box">
+          <div class="formula-label">Test Statistic untuk Perbedaan Proporsi</div>
+          \[ z = \frac{(\hat{p}_1 - \hat{p}_2) - (p_1 - p_2)}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}} \]
+          \[ \text{dengan } \hat{p} = \frac{\hat{p}_1 n_1 + \hat{p}_2 n_2}{n_1 + n_2} \]
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- BAB 9: REGRESSION -->
+    <!-- ======================================= -->
+    <div class="chapter" id="regression-chapter">
+      <div class="chapter-eyebrow">Bab 9</div>
+      <h2>Regresi (Regression)</h2>
+
+      <div class="section" id="scatter">
+        <h3><span class="dot"></span> Scatterplot &amp; Regresi</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Scatterplot</div>
+            <div class="definition">Plot titik data yang membandingkan dua variabel secara bersamaan.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Approximating Curve</div>
+            <div class="definition">Kurva yang mendekati bentuk titik-titik dalam scatterplot.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Curve Fitting</div>
+            <div class="definition">Proses menemukan persamaan dari approximating curve.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="regression">
+        <h3><span class="dot"></span> Garis Regresi</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Regression Line / Best-Fit Line</div>
+            <div class="definition">Garis yang paling menunjukkan tren data dalam scatterplot. Juga disebut least-squares line.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Positive Linear Relationship</div>
+            <div class="definition">Garis regresi memiliki kemiringan positif.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Negative Linear Relationship</div>
+            <div class="definition">Garis regresi memiliki kemiringan negatif.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">Regression</div>
+            <div class="definition">Proses mengestimasi nilai variabel dependen dari nilai variabel independen yang diberikan.</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Persamaan Garis Regresi</div>
+          \[ \hat{y} = a + bx \]
+          \[ b = \frac{n\sum xy - \sum x \sum y}{n\sum x^2 - (\sum x)^2} \]
+          \[ a = \frac{\sum y - b\sum x}{n} \]
+          <p>Keterangan: ŷ = nilai y yang diprediksi, a = intercept, b = slope</p>
+        </div>
+      </div>
+
+      <div class="section" id="corr-resid">
+        <h3><span class="dot"></span> Koefisien Korelasi &amp; Residual</h3>
+
+        <div class="formula-box">
+          <div class="formula-label">Correlation Coefficient (r)</div>
+          \[ r = \frac{1}{n-1} \sum \left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right) \]
+          <p>Nilai r ∈ [−1, 1]. Mendekati −1 = hubungan negatif kuat, mendekati +1 = hubungan positif kuat, mendekati 0 = tidak ada hubungan linear.</p>
+        </div>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Residual (e)</div>
+            <div class="definition">Selisih antara nilai aktual dan nilai yang diprediksi berdasarkan garis regresi untuk titik data yang sama.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="r-squared">
+        <h3><span class="dot"></span> Koefisien Determinasi (r²) &amp; RMSE</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">Coefficient of Determination (r²)</div>
+            <div class="definition">Mengukur persentase error yang dieliminasi dengan menggunakan least-squares regression dibandingkan hanya menggunakan ȳ.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">RMSE / RMSD</div>
+            <div class="definition">Root-Mean-Square Error: standar deviasi dari residual.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="chi-square">
+        <h3><span class="dot"></span> Chi-Square Tests (χ²)</h3>
+
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="term">χ²-test for Homogeneity</div>
+            <div class="definition">Menguji apakah distribusi variabel kategorik sama di beberapa populasi.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">χ²-test for Independence</div>
+            <div class="definition">Menguji apakah dua variabel kategorik independen satu sama lain.</div>
+          </div>
+          <div class="def-card">
+            <div class="term">χ² Goodness-of-Fit Test</div>
+            <div class="definition">Menguji apakah distribusi sampel sesuai dengan distribusi yang diharapkan.</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">📋 Kondisi untuk Inferensi χ²-test</div>
+          <p><strong>Random</strong> — data dari sampel acak | <strong>Large counts</strong> — frekuensi yang diharapkan ≥ 5 | <strong>Independent</strong> | <strong>Categorical</strong> — data kategorik</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- TABEL STATISTIK -->
+    <!-- ======================================= -->
+    <div class="chapter" id="stat-tables">
+      <div class="chapter-eyebrow">Lampiran</div>
+      <h2>Tabel Statistik</h2>
+
+      <!-- Z TABLE POSITIVE -->
+      <div class="section" id="z-table-pos">
+        <h3><span class="dot"></span> Tabel Z (Positif)</h3>
+        <div class="z-table-note">
+          Tabel ini menunjukkan area di sebelah kiri z (P(Z ≤ z)) untuk nilai z positif.
+        </div>
+        <div class="z-table-scroll">
+          <table style="font-size:0.78rem; min-width:700px;">
+            <thead>
+              <tr>
+                <th>z</th><th>.00</th><th>.01</th><th>.02</th><th>.03</th><th>.04</th><th>.05</th><th>.06</th><th>.07</th><th>.08</th><th>.09</th>
+              </tr>
+            </thead>
+            <tbody id="z-pos-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Z TABLE NEGATIVE -->
+      <div class="section" id="z-table-neg">
+        <h3><span class="dot"></span> Tabel Z (Negatif)</h3>
+        <div class="z-table-note">
+          Tabel ini menunjukkan area di sebelah kiri z (P(Z ≤ z)) untuk nilai z negatif.
+        </div>
+        <div class="z-table-scroll">
+          <table style="font-size:0.78rem; min-width:700px;">
+            <thead>
+              <tr>
+                <th>z</th><th>.00</th><th>.01</th><th>.02</th><th>.03</th><th>.04</th><th>.05</th><th>.06</th><th>.07</th><th>.08</th><th>.09</th>
+              </tr>
+            </thead>
+            <tbody id="z-neg-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- T TABLE -->
+      <div class="section" id="t-table">
+        <h3><span class="dot"></span> Tabel t (Student's t-Distribution)</h3>
+        <div class="z-table-note">
+          Tabel menunjukkan nilai kritis t berdasarkan degrees of freedom (df) dan upper-tail probability p.
+        </div>
+        <div class="z-table-scroll">
+          <table style="font-size:0.78rem; min-width:800px;">
+            <thead>
+              <tr>
+                <th>df</th>
+                <th>0.25</th><th>0.20</th><th>0.15</th><th>0.10</th><th>0.05</th>
+                <th>0.025</th><th>0.01</th><th>0.005</th><th>0.001</th><th>0.0005</th>
+              </tr>
+            </thead>
+            <tbody id="t-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CHI TABLE -->
+      <div class="section" id="chi-table">
+        <h3><span class="dot"></span> Tabel Chi-Square (χ²)</h3>
+        <div class="z-table-note">
+          Tabel menunjukkan nilai kritis χ² berdasarkan degrees of freedom (df) dan upper-tail probability p.
+        </div>
+        <div class="z-table-scroll">
+          <table style="font-size:0.78rem; min-width:900px;">
+            <thead>
+              <tr>
+                <th>df</th>
+                <th>0.25</th><th>0.20</th><th>0.15</th><th>0.10</th><th>0.05</th>
+                <th>0.025</th><th>0.02</th><th>0.01</th><th>0.005</th><th>0.0025</th><th>0.001</th><th>0.0005</th>
+              </tr>
+            </thead>
+            <tbody id="chi-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /content-area -->
+</div><!-- /main -->
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // ---- SIDEBAR TOGGLE ----
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const sb = document.getElementById('sidebar');
+    const btn = document.getElementById('menu-toggle');
+    if (window.innerWidth <= 900 && !sb.contains(e.target) && e.target !== btn) {
+      sb.classList.remove('open');
+    }
+  });
+
+  // ---- BACK TO TOP ----
+  window.addEventListener('scroll', function() {
+    const btn = document.getElementById('back-top');
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+
+  // ---- Z TABLE POSITIVE ----
+  const zPosData = [
+    [0.0, .5000,.5040,.5080,.5120,.5160,.5199,.5239,.5279,.5319,.5359],
+    [0.1, .5398,.5438,.5478,.5517,.5557,.5596,.5636,.5675,.5714,.5753],
+    [0.2, .5793,.5832,.5871,.5910,.5948,.5987,.6026,.6064,.6103,.6141],
+    [0.3, .6179,.6217,.6255,.6293,.6331,.6368,.6406,.6443,.6480,.6517],
+    [0.4, .6554,.6591,.6628,.6664,.6700,.6736,.6772,.6808,.6844,.6879],
+    [0.5, .6915,.6950,.6985,.7019,.7054,.7088,.7123,.7157,.7190,.7224],
+    [0.6, .7257,.7291,.7324,.7357,.7389,.7422,.7454,.7486,.7517,.7549],
+    [0.7, .7580,.7611,.7642,.7673,.7704,.7734,.7764,.7794,.7823,.7852],
+    [0.8, .7881,.7910,.7939,.7967,.7995,.8023,.8051,.8078,.8106,.8133],
+    [0.9, .8159,.8186,.8212,.8238,.8264,.8289,.8315,.8340,.8365,.8389],
+    [1.0, .8413,.8438,.8461,.8485,.8508,.8531,.8554,.8577,.8599,.8621],
+    [1.1, .8643,.8665,.8686,.8708,.8729,.8749,.8770,.8790,.8810,.8830],
+    [1.2, .8849,.8869,.8888,.8907,.8925,.8944,.8962,.8980,.8997,.9015],
+    [1.3, .9032,.9049,.9066,.9082,.9099,.9115,.9131,.9147,.9162,.9177],
+    [1.4, .9192,.9207,.9222,.9236,.9251,.9265,.9279,.9292,.9306,.9319],
+    [1.5, .9332,.9345,.9357,.9370,.9382,.9394,.9406,.9418,.9429,.9441],
+    [1.6, .9452,.9463,.9474,.9484,.9495,.9505,.9515,.9525,.9535,.9545],
+    [1.7, .9554,.9564,.9573,.9582,.9591,.9599,.9608,.9616,.9625,.9633],
+    [1.8, .9641,.9649,.9656,.9664,.9671,.9678,.9686,.9693,.9699,.9706],
+    [1.9, .9713,.9719,.9726,.9732,.9738,.9744,.9750,.9756,.9761,.9767],
+    [2.0, .9772,.9778,.9783,.9788,.9793,.9798,.9803,.9808,.9812,.9817],
+    [2.1, .9821,.9826,.9830,.9834,.9838,.9842,.9846,.9850,.9854,.9857],
+    [2.2, .9861,.9864,.9868,.9871,.9875,.9878,.9881,.9884,.9887,.9890],
+    [2.3, .9893,.9896,.9898,.9901,.9904,.9906,.9909,.9911,.9913,.9916],
+    [2.4, .9918,.9920,.9922,.9925,.9927,.9929,.9931,.9932,.9934,.9936],
+    [2.5, .9938,.9940,.9941,.9943,.9945,.9946,.9948,.9949,.9951,.9952],
+    [2.6, .9953,.9955,.9956,.9957,.9959,.9960,.9961,.9962,.9963,.9964],
+    [2.7, .9965,.9966,.9967,.9968,.9969,.9970,.9971,.9972,.9973,.9974],
+    [2.8, .9974,.9975,.9976,.9977,.9977,.9978,.9979,.9979,.9980,.9981],
+    [2.9, .9981,.9982,.9982,.9983,.9984,.9984,.9985,.9985,.9986,.9986],
+    [3.0, .9987,.9987,.9987,.9988,.9988,.9989,.9989,.9989,.9990,.9990],
+    [3.1, .9990,.9991,.9991,.9991,.9992,.9992,.9992,.9992,.9993,.9993],
+    [3.2, .9993,.9993,.9994,.9994,.9994,.9994,.9994,.9995,.9995,.9995],
+    [3.3, .9995,.9995,.9995,.9996,.9996,.9996,.9996,.9996,.9996,.9997],
+    [3.4, .9997,.9997,.9997,.9997,.9997,.9997,.9997,.9997,.9997,.9998],
+  ];
+  const zpBody = document.getElementById('z-pos-body');
+  zPosData.forEach(row => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><strong>${row[0].toFixed(1)}</strong></td>` + row.slice(1).map(v=>v?`<td>${v.toFixed(4)}</td>`:'<td></td>').join('');
+    zpBody.appendChild(tr);
+  });
+
+  // ---- Z TABLE NEGATIVE ----
+  const zNegData = [
+    [-3.4,.0003,.0003,.0003,.0003,.0003,.0003,.0003,.0003,.0003,.0002],
+    [-3.3,.0005,.0005,.0005,.0004,.0004,.0004,.0004,.0004,.0004,.0003],
+    [-3.2,.0007,.0007,.0006,.0006,.0006,.0006,.0006,.0005,.0005,.0005],
+    [-3.1,.0010,.0009,.0009,.0009,.0008,.0008,.0008,.0008,.0007,.0007],
+    [-3.0,.0013,.0013,.0013,.0012,.0012,.0011,.0011,.0011,.0010,.0010],
+    [-2.9,.0019,.0018,.0018,.0017,.0016,.0016,.0015,.0015,.0014,.0014],
+    [-2.8,.0026,.0025,.0024,.0023,.0023,.0022,.0021,.0021,.0020,.0019],
+    [-2.7,.0035,.0034,.0033,.0032,.0031,.0030,.0029,.0028,.0027,.0026],
+    [-2.6,.0047,.0045,.0044,.0043,.0041,.0040,.0039,.0038,.0037,.0036],
+    [-2.5,.0062,.0060,.0059,.0057,.0055,.0054,.0052,.0051,.0049,.0048],
+    [-2.4,.0082,.0080,.0078,.0075,.0073,.0071,.0069,.0068,.0066,.0064],
+    [-2.3,.0107,.0104,.0102,.0099,.0096,.0094,.0091,.0089,.0087,.0084],
+    [-2.2,.0139,.0136,.0132,.0129,.0125,.0122,.0119,.0116,.0113,.0110],
+    [-2.1,.0179,.0174,.0170,.0166,.0162,.0158,.0154,.0150,.0146,.0143],
+    [-2.0,.0228,.0222,.0217,.0212,.0207,.0202,.0197,.0192,.0188,.0183],
+    [-1.9,.0287,.0281,.0274,.0268,.0262,.0256,.0250,.0244,.0239,.0233],
+    [-1.8,.0359,.0351,.0344,.0336,.0329,.0322,.0314,.0307,.0301,.0294],
+    [-1.7,.0446,.0436,.0427,.0418,.0409,.0401,.0392,.0384,.0375,.0367],
+    [-1.6,.0548,.0537,.0526,.0516,.0505,.0495,.0485,.0475,.0465,.0455],
+    [-1.5,.0668,.0655,.0643,.0630,.0618,.0606,.0594,.0582,.0571,.0559],
+    [-1.4,.0808,.0793,.0778,.0764,.0749,.0735,.0721,.0708,.0694,.0681],
+    [-1.3,.0968,.0951,.0934,.0918,.0901,.0885,.0869,.0853,.0838,.0823],
+    [-1.2,.1151,.1131,.1112,.1093,.1075,.1056,.1038,.1020,.1003,.0985],
+    [-1.1,.1357,.1335,.1314,.1292,.1271,.1251,.1230,.1210,.1190,.1170],
+    [-1.0,.1587,.1562,.1539,.1515,.1492,.1469,.1446,.1423,.1401,.1379],
+    [-0.9,.1841,.1814,.1788,.1762,.1736,.1711,.1685,.1660,.1635,.1611],
+    [-0.8,.2119,.2090,.2061,.2033,.2005,.1977,.1949,.1922,.1894,.1867],
+    [-0.7,.2420,.2389,.2358,.2327,.2296,.2266,.2236,.2206,.2177,.2148],
+    [-0.6,.2743,.2709,.2676,.2643,.2611,.2578,.2546,.2514,.2483,.2451],
+    [-0.5,.3085,.3050,.3015,.2981,.2946,.2912,.2877,.2843,.2810,.2776],
+    [-0.4,.3446,.3409,.3372,.3336,.3300,.3264,.3228,.3192,.3156,.3121],
+    [-0.3,.3821,.3783,.3745,.3707,.3669,.3632,.3594,.3557,.3520,.3483],
+    [-0.2,.4207,.4168,.4129,.4090,.4052,.4013,.3974,.3936,.3897,.3859],
+    [-0.1,.4602,.4562,.4522,.4483,.4443,.4404,.4364,.4325,.4286,.4247],
+    [-0.0,.5000,.4960,.4920,.4880,.4840,.4801,.4761,.4721,.4681,.4641],
+  ];
+  const znBody = document.getElementById('z-neg-body');
+  zNegData.forEach(row => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><strong>${row[0].toFixed(1)}</strong></td>` + row.slice(1).map(v=>`<td>${v.toFixed(4)}</td>`).join('');
+    znBody.appendChild(tr);
+  });
+
+  // ---- T TABLE ----
+  const tData = [
+    [1,1.000,1.376,1.963,3.078,6.314,12.71,31.82,63.66,318.31,636.62],
+    [2,0.816,1.061,1.386,1.886,2.920,4.303,6.965,9.925,22.327,31.599],
+    [3,0.765,0.987,1.250,1.638,2.353,3.182,4.541,5.841,10.215,12.924],
+    [4,0.741,0.941,1.190,1.533,2.132,2.776,3.747,4.604,7.173,8.610],
+    [5,0.727,0.920,1.156,1.476,2.015,2.571,3.365,4.032,5.893,6.869],
+    [6,0.718,0.906,1.134,1.440,1.943,2.447,3.143,3.707,5.208,5.959],
+    [7,0.711,0.896,1.119,1.415,1.895,2.365,2.998,3.499,4.785,5.408],
+    [8,0.706,0.889,1.108,1.397,1.860,2.306,2.896,3.355,4.501,5.041],
+    [9,0.703,0.883,1.100,1.383,1.833,2.262,2.821,3.250,4.297,4.781],
+    [10,0.700,0.879,1.093,1.372,1.812,2.228,2.764,3.169,4.144,4.587],
+    [11,0.697,0.876,1.088,1.363,1.796,2.201,2.718,3.106,4.025,4.437],
+    [12,0.695,0.873,1.083,1.356,1.782,2.179,2.681,3.055,3.930,4.318],
+    [13,0.694,0.870,1.079,1.350,1.771,2.160,2.650,3.012,3.852,4.221],
+    [14,0.692,0.868,1.076,1.345,1.761,2.145,2.624,2.977,3.787,4.140],
+    [15,0.691,0.866,1.074,1.341,1.753,2.131,2.602,2.947,3.733,4.073],
+    [16,0.690,0.865,1.071,1.337,1.746,2.120,2.583,2.921,3.686,4.015],
+    [17,0.689,0.863,1.069,1.333,1.740,2.110,2.567,2.898,3.646,3.965],
+    [18,0.688,0.862,1.067,1.330,1.734,2.101,2.552,2.878,3.610,3.922],
+    [19,0.688,0.861,1.066,1.328,1.729,2.093,2.539,2.861,3.579,3.883],
+    [20,0.687,0.860,1.064,1.325,1.725,2.086,2.528,2.845,3.552,3.850],
+    [21,0.686,0.859,1.063,1.323,1.721,2.080,2.518,2.831,3.527,3.819],
+    [22,0.686,0.858,1.061,1.321,1.717,2.074,2.508,2.819,3.505,3.792],
+    [23,0.685,0.858,1.060,1.319,1.714,2.069,2.500,2.807,3.485,3.768],
+    [24,0.685,0.857,1.059,1.318,1.711,2.064,2.492,2.797,3.467,3.745],
+    [25,0.684,0.856,1.058,1.316,1.708,2.060,2.485,2.787,3.450,3.725],
+    [26,0.684,0.856,1.058,1.315,1.706,2.056,2.479,2.779,3.435,3.707],
+    [27,0.684,0.855,1.057,1.314,1.703,2.052,2.473,2.771,3.421,3.690],
+    [28,0.683,0.855,1.056,1.313,1.701,2.048,2.467,2.763,3.408,3.674],
+    [29,0.683,0.854,1.055,1.311,1.699,2.045,2.462,2.756,3.396,3.659],
+    [30,0.683,0.854,1.055,1.310,1.697,2.042,2.457,2.750,3.385,3.646],
+  ];
+  const tBody = document.getElementById('t-body');
+  tData.forEach(row => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><strong>${row[0]}</strong></td>` + row.slice(1).map(v=>`<td>${v.toFixed(3)}</td>`).join('');
+    tBody.appendChild(tr);
+  });
+
+  // ---- CHI TABLE ----
+  const chiData = [
+    [1,1.32,1.64,2.07,2.71,3.81,5.02,5.41,6.63,7.88,9.14,10.83,12.12],
+    [2,2.77,3.22,3.79,4.61,5.99,7.38,7.82,9.21,10.60,11.98,13.82,15.20],
+    [3,4.11,4.64,5.32,6.25,7.81,9.35,9.84,11.34,12.84,14.32,16.27,17.73],
+    [4,5.39,5.99,6.74,7.78,9.49,11.14,11.67,13.28,14.86,16.42,18.47,20.00],
+    [5,6.63,7.29,8.12,9.24,11.07,12.83,13.39,15.09,16.75,18.39,20.52,22.11],
+    [6,7.84,8.56,9.45,10.64,12.59,14.45,15.03,16.81,18.55,20.25,22.46,24.10],
+    [7,9.04,9.80,10.75,12.02,14.07,16.01,16.62,18.48,20.28,22.04,24.32,26.02],
+    [8,10.22,11.03,12.03,13.36,15.51,17.53,18.17,20.09,21.95,23.77,26.12,27.87],
+    [9,11.39,12.24,13.29,14.68,16.92,19.02,19.68,21.67,23.59,25.46,27.88,29.67],
+    [10,12.55,13.44,14.53,15.99,18.31,20.48,21.16,23.21,25.19,27.11,29.59,31.42],
+    [11,13.70,14.63,15.77,17.28,19.68,21.92,22.62,24.72,26.76,28.73,31.26,33.14],
+    [12,14.85,15.81,16.99,18.55,21.03,23.24,24.05,26.22,28.30,30.32,32.91,34.82],
+    [13,15.98,16.98,18.20,19.81,22.36,24.74,25.47,27.69,29.82,31.88,34.53,36.48],
+    [14,17.12,18.15,19.41,21.06,23.68,26.12,26.87,29.14,31.32,33.43,36.12,38.11],
+    [15,18.25,19.31,20.60,22.31,25.00,27.49,28.26,30.58,32.80,34.95,37.70,39.72],
+    [16,19.37,20.47,21.79,23.54,26.30,28.85,29.63,32.00,34.27,36.46,39.25,41.31],
+    [17,20.49,21.61,22.98,24.77,27.59,30.19,31.00,33.41,35.72,37.95,40.79,42.88],
+    [18,21.60,22.76,24.16,25.99,28.87,31.53,32.35,34.81,37.16,39.42,42.31,44.43],
+    [19,22.72,23.90,25.33,27.20,30.14,32.85,33.69,36.19,38.58,40.88,43.82,45.97],
+    [20,23.83,25.04,26.50,28.41,31.41,34.17,35.02,37.57,40.00,42.34,45.31,47.50],
+    [21,24.93,26.17,27.66,29.62,32.67,35.48,36.34,38.93,41.40,43.78,46.80,49.01],
+    [22,26.04,27.30,28.82,30.81,33.92,36.78,37.66,40.29,42.80,45.20,48.27,50.51],
+    [23,27.14,28.43,29.98,32.01,35.17,38.08,38.97,41.64,44.18,46.62,49.73,52.00],
+    [24,28.24,29.55,31.13,33.20,36.42,39.36,40.27,42.98,45.56,48.03,51.18,53.48],
+    [25,29.34,30.68,32.28,34.38,37.65,40.65,41.57,44.31,46.93,49.44,52.62,54.95],
+    [26,30.43,31.79,33.43,35.56,38.89,41.92,42.86,45.64,48.29,50.83,54.05,56.41],
+    [27,31.53,32.91,34.57,36.74,40.11,43.19,44.14,46.96,49.64,52.22,55.48,57.86],
+    [28,32.62,34.03,35.71,37.92,41.34,44.46,45.42,48.28,50.99,53.59,56.89,59.30],
+    [29,33.71,35.14,36.85,39.09,42.56,45.72,46.69,49.59,52.34,54.97,58.30,60.73],
+    [30,34.80,36.25,37.99,40.26,43.77,46.98,47.96,50.89,53.67,56.33,59.70,62.16],
+  ];
+  const chiBody = document.getElementById('chi-body');
+  chiData.forEach(row => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><strong>${row[0]}</strong></td>` + row.slice(1).map(v=>`<td>${v.toFixed(2)}</td>`).join('');
+    chiBody.appendChild(tr);
+  });
+</script>
+</body>
+</html>
